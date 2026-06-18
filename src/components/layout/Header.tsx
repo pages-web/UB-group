@@ -7,6 +7,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 const navItems = [
+  { label: "Нүүр", href: "/" },
   { label: "Бидний тухай", href: "/about" },
   { label: "Бизнес", href: "/business" },
   { label: "Тогтвортой хөгжил", href: "/sustainability" },

@@ -1,11 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
 
-const featuredProjects = [
+const heroSlides = [
   {
     id: 1,
     titleMn: "Vision Business Tower",
@@ -14,7 +15,7 @@ const featuredProjects = [
     subtitleEn: "26-storey service and office building",
     locationMn: "Хан-Уул дүүрэг, 2025",
     locationEn: "Khan-Uul District, 2025",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1400&q=80",
   },
   {
     id: 2,
@@ -24,7 +25,7 @@ const featuredProjects = [
     subtitleEn: "Residential complex",
     locationMn: "Хан-Уул дүүрэг, 2026",
     locationEn: "Khan-Uul District, 2026",
-    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1400&q=80",
   },
   {
     id: 3,
@@ -34,7 +35,7 @@ const featuredProjects = [
     subtitleEn: "Mixed-use development",
     locationMn: "Хотын төв, 2026",
     locationEn: "City Center, 2026",
-    image: "https://images.unsplash.com/photo-1449844908441-8829872d2607?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1449844908441-8829872d2607?w=1400&q=80",
   },
   {
     id: 4,
@@ -44,7 +45,7 @@ const featuredProjects = [
     subtitleEn: "International trade center",
     locationMn: "Сүхбаатар дүүрэг, 2024",
     locationEn: "Sukhbaatar District, 2024",
-    image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1400&q=80",
   },
   {
     id: 5,
@@ -54,7 +55,7 @@ const featuredProjects = [
     subtitleEn: "Premium office building",
     locationMn: "Баянзүрх дүүрэг, 2027",
     locationEn: "Bayanzurkh District, 2027",
-    image: "https://images.unsplash.com/photo-1577495508048-b635879837f1?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1577495508048-b635879837f1?w=1400&q=80",
   },
   {
     id: 6,
@@ -64,7 +65,7 @@ const featuredProjects = [
     subtitleEn: "Sustainable city project",
     locationMn: "Төв аймаг, 2028",
     locationEn: "Tuv Province, 2028",
-    image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=1400&q=80",
   },
 ];
 
@@ -106,39 +107,105 @@ const latestNews = [
   },
 ];
 
-function MarqueeProjects({ locale }: { locale: string }) {
-  const items = [...featuredProjects, ...featuredProjects];
+function HeroSlider({ locale }: { locale: string }) {
+  const [current, setCurrent] = useState(0);
+  const isMn = locale === "mn";
+
+  const next = useCallback(() => {
+    setCurrent((prev) => (prev + 1) % heroSlides.length);
+  }, []);
+
+  const prev = useCallback(() => {
+    setCurrent((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(next, 5000);
+    return () => clearInterval(timer);
+  }, [next]);
+
+  const slide = heroSlides[current];
 
   return (
-    <div className="w-full overflow-hidden py-2">
-      <div className="marquee-track">
-        {items.map((project, index) => (
-          <div
-            key={`${project.id}-${index}`}
-            className="flex-shrink-0 w-[340px] sm:w-[400px] md:w-[460px] mx-3 group"
-          >
-            <div className="relative h-[260px] sm:h-[300px] md:h-[340px] overflow-hidden rounded-lg bg-[#0A1628]">
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                style={{ backgroundImage: `url('${project.image}')` }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/90 via-[#0A1628]/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
-                <h3 className="text-lg sm:text-xl font-semibold text-white mb-1">
-                  {locale === "mn" ? project.titleMn : project.titleEn}
-                </h3>
-                <p className="text-sm text-white/80 mb-2">
-                  {locale === "mn" ? project.subtitleMn : project.subtitleEn}
-                </p>
-                <p className="text-xs text-white/60">
-                  {locale === "mn" ? project.locationMn : project.locationEn}
-                </p>
-              </div>
-            </div>
+    <section className="w-full bg-[#0A1628]">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] md:aspect-[2.4/1] max-h-[75vh] overflow-hidden rounded-3xl sm:rounded-[40px] bg-[#0A1628]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={slide.id}
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url('${slide.image}')` }}
+            />
+          </AnimatePresence>
+
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/90 via-[#0A1628]/30 to-[#0A1628]/20" />
+
+          <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-10 lg:p-14">
+            <motion.div
+              key={`text-${slide.id}`}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="max-w-2xl"
+            >
+              <span className="inline-block px-3 py-1.5 bg-[#C9A227]/90 text-white text-[11px] font-semibold tracking-wider uppercase rounded-full mb-4">
+                {isMn ? "Онцлох төсөл" : "Featured Project"}
+              </span>
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3 tracking-tight">
+                {isMn ? slide.titleMn : slide.titleEn}
+              </h1>
+              <p className="text-sm sm:text-lg text-white/80 mb-2">
+                {isMn ? slide.subtitleMn : slide.subtitleEn}
+              </p>
+              <p className="text-xs sm:text-sm text-white/60 mb-6">
+                {isMn ? slide.locationMn : slide.locationEn}
+              </p>
+              <Link
+                href={`/${locale}/projects`}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-[#1E3A5F] text-sm font-semibold rounded-full hover:bg-[#F0F4F8] transition-colors w-fit"
+              >
+                {isMn ? "Төслүүд" : "Projects"}
+                <ArrowRight size={16} />
+              </Link>
+            </motion.div>
           </div>
-        ))}
+
+          {/* Navigation arrows */}
+          <button
+            onClick={prev}
+            aria-label={isMn ? "Өмнөх" : "Previous"}
+            className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 backdrop-blur-sm text-white flex items-center justify-center hover:bg-white/20 transition-colors"
+          >
+            <ChevronLeft size={22} />
+          </button>
+          <button
+            onClick={next}
+            aria-label={isMn ? "Дараах" : "Next"}
+            className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 backdrop-blur-sm text-white flex items-center justify-center hover:bg-white/20 transition-colors"
+          >
+            <ChevronRight size={22} />
+          </button>
+
+          {/* Dots */}
+          <div className="absolute bottom-5 sm:bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2">
+            {heroSlides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrent(index)}
+                aria-label={`${isMn ? "Слайд" : "Slide"} ${index + 1}`}
+                className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-all duration-300 ${
+                  index === current ? "bg-white w-6 sm:w-8" : "bg-white/40 hover:bg-white/60"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -187,98 +254,12 @@ function Reveal({ children, delay = 0, className = "" }: { children: React.React
 export default function HomePage() {
   const pathname = usePathname();
   const locale = pathname.split("/")[1] || "mn";
-
   const isMn = locale === "mn";
 
   return (
     <>
-      {/* HERO */}
-      <section className="relative w-full h-screen min-h-[600px] overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80')",
-          }}
-        />
-        <div className="absolute inset-0 bg-black/50" />
-
-        <div className="relative h-full flex items-center">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8 w-full">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="max-w-2xl"
-            >
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 tracking-tight">
-                {isMn ? "Ирээдүйг бүтээгч" : "Building the Future"}
-              </h1>
-              <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-8 max-w-lg">
-                {isMn
-                  ? "UB group нь эрмэлзэл дүүрэн, дэвшилтэт хөгжилд тэмүүлэх хүслээр хэн бүхэнд нээлттэй, харилцан хүндэлэл бүхий нийгмийн тулгуур хамтралыг бүрдүүлж, тогтвортой эх дэлхийг бүтээгч, залууч эрч хүч нь байна."
-                  : "UB Group builds Mongolia's future through investment, construction, and infrastructure. We create sustainable value and lasting partnerships across industries."}
-              </p>
-              <div className="flex flex-wrap items-center gap-4">
-                <Link
-                  href={`/${locale}/about`}
-                  className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-[#1E3A5F] text-sm font-semibold tracking-wide rounded-full hover:bg-[#F0F4F8] transition-colors"
-                >
-                  {isMn ? "Бидний тухай" : "About Us"}
-                  <ArrowRight size={16} />
-                </Link>
-                <Link
-                  href={`/${locale}/business`}
-                  className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/40 text-white text-sm font-semibold tracking-wide rounded-full hover:bg-white/10 transition-colors"
-                >
-                  {isMn ? "Бизнес" : "Business"}
-                </Link>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        >
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-1.5 h-1.5 bg-[#F0F4F8]/60 rounded-full"
-            />
-          </div>
-        </motion.div>
-      </section>
-
-      {/* SECTION 1 — FEATURED PROJECTS MARQUEE */}
-      <section className="w-full py-20 sm:py-24 bg-[#0A1628]">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8 mb-10 sm:mb-12">
-          <Reveal>
-            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-              <div>
-                <span className="text-[11px] font-semibold tracking-[0.25em] text-[#C9A227] uppercase mb-4 block">
-                  {isMn ? "Онцлох төслүүд" : "Featured Projects"}
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                  {isMn ? "Онцлох төслүүд" : "Featured Projects"}
-                </h2>
-              </div>
-              <Link
-                href={`/${locale}/projects`}
-                className="inline-flex items-center gap-2 text-white/80 text-sm font-medium hover:text-white transition-colors"
-              >
-                {isMn ? "Бүх төслүүд" : "All Projects"}
-                <ArrowRight size={16} />
-              </Link>
-            </div>
-          </Reveal>
-        </div>
-        <MarqueeProjects locale={locale} />
-      </section>
+      {/* HERO — BOXED PROJECT SLIDER */}
+      <HeroSlider locale={locale} />
 
       {/* SECTION 2 — COMPANIES LOGO MARQUEE */}
       <section className="w-full py-20 sm:py-24 bg-[#F5F7FA]">
