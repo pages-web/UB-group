@@ -130,25 +130,25 @@ export default function AboutPage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative w-full pt-24 pb-16 overflow-hidden bg-[#0F172A]">
+      <section className="relative w-full pt-24 pb-16 overflow-hidden bg-[#000000]">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-30"
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1920&q=80')" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0F172A]/70 via-[#0F172A]/40 to-[#0F172A]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/70 via-[#000000]/40 to-[#000000]" />
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="text-[11px] font-semibold tracking-[0.25em] text-[#C9A227] uppercase mb-6 block">
+            <span className="text-[11px] font-semibold tracking-[0.25em] text-[#EC6707] uppercase mb-6 block">
               Бидний тухай
             </span>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5 tracking-tight">
               Монгол Улсыг
               <br />
-              <span className="text-[#C9A227]">2006 оноос</span>
+              <span className="text-[#EC6707]">2006 оноос</span>
             </h1>
             <p className="text-lg text-white/70 max-w-xl leading-relaxed">
               Барилга, дэд бүтэц, хөрөнгө оруулалтын салбарт 18 жилийн туршлага.
@@ -162,13 +162,13 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <Reveal>
-              <span className="text-[11px] font-semibold tracking-[0.2em] text-[#1E3A5F] uppercase mb-6 block">
+              <span className="text-[11px] font-semibold tracking-[0.2em] text-[#EC6707] uppercase mb-6 block">
                 Бид хэн бэ
               </span>
-              <h2 className="text-3xl lg:text-xl font-bold text-[#0F172A] leading-tight mb-5 tracking-tight">
+              <h2 className="text-3xl lg:text-xl font-bold text-[#000000] leading-tight mb-5 tracking-tight">
                 Чанарын
                 <br />
-                <span className="text-[#1E3A5F]">уламжлал</span>
+                <span className="text-[#EC6707]">уламжлал</span>
               </h2>
               <div className="space-y-3">
                 <p className="text-[15px] text-[#334155] leading-relaxed">
@@ -189,7 +189,7 @@ export default function AboutPage() {
                   className="relative h-[350px] bg-cover bg-center rounded-2xl overflow-hidden shadow-xl"
                   style={{ backgroundImage: "url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80')" }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/40 to-transparent" />
                 </div>
               </div>
             </Reveal>
@@ -201,10 +201,10 @@ export default function AboutPage() {
       <section className="w-full py-16 lg:py-12 bg-[#E8EEF4]">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Reveal className="text-center mb-5">
-            <span className="text-[11px] font-semibold tracking-[0.2em] text-[#1E3A5F] uppercase mb-4 block">
+            <span className="text-[11px] font-semibold tracking-[0.2em] text-[#EC6707] uppercase mb-4 block">
               Бидний үндэс
             </span>
-            <h2 className="text-3xl lg:text-xl font-bold text-[#0F172A] tracking-tight">
+            <h2 className="text-3xl lg:text-xl font-bold text-[#000000] tracking-tight">
               Алсын хараа, Эрхэм зорилго, Үнэт зүйлс
             </h2>
           </Reveal>
@@ -212,10 +212,10 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             <Reveal delay={0}>
               <div className="bg-[#F0F4F8] rounded-2xl p-4 text-center flex flex-col items-center h-full shadow-sm border border-[#E2E8F0]">
-                <div className="w-20 h-20 rounded-full border border-[#1E3A5F]/20 flex items-center justify-center mb-5">
-                  <Eye size={32} className="text-[#1E3A5F]" strokeWidth={1.5} />
+                <div className="w-20 h-20 rounded-full border border-[#EC6707]/20 flex items-center justify-center mb-5">
+                  <Eye size={32} className="text-[#EC6707]" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-xl font-bold text-[#0F172A] mb-6">Алсын хараа</h3>
+                <h3 className="text-xl font-bold text-[#000000] mb-6">Алсын хараа</h3>
                 <p className="text-[15px] text-[#334155] leading-relaxed flex-grow">
                   Тогтвортой, хүртээмжтэй өгөөжийг бий болгосон хөгжүүлэгч компани болно.
                 </p>
@@ -224,10 +224,10 @@ export default function AboutPage() {
 
             <Reveal delay={0.1}>
               <div className="bg-[#F0F4F8] rounded-2xl p-4 text-center flex flex-col items-center h-full shadow-sm border border-[#E2E8F0]">
-                <div className="w-20 h-20 rounded-full border border-[#1E3A5F]/20 flex items-center justify-center mb-5">
-                  <Target size={32} className="text-[#1E3A5F]" strokeWidth={1.5} />
+                <div className="w-20 h-20 rounded-full border border-[#EC6707]/20 flex items-center justify-center mb-5">
+                  <Target size={32} className="text-[#EC6707]" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-xl font-bold text-[#0F172A] mb-6">Эрхэм зорилго</h3>
+                <h3 className="text-xl font-bold text-[#000000] mb-6">Эрхэм зорилго</h3>
                 <p className="text-[15px] text-[#334155] leading-relaxed flex-grow">
                   Дэвшилтэт шийдэл, олон улсын стандартыг хүсэл тэмүүлэл, ур чадвартай холбон Монгол Улсын хөгжилд хувь нэмрээ оруулна.
                 </p>
@@ -236,10 +236,10 @@ export default function AboutPage() {
 
             <Reveal delay={0.2}>
               <div className="bg-[#F0F4F8] rounded-2xl p-4 text-center flex flex-col items-center h-full shadow-sm border border-[#E2E8F0]">
-                <div className="w-20 h-20 rounded-full border border-[#1E3A5F]/20 flex items-center justify-center mb-5">
-                  <Star size={32} className="text-[#1E3A5F]" strokeWidth={1.5} />
+                <div className="w-20 h-20 rounded-full border border-[#EC6707]/20 flex items-center justify-center mb-5">
+                  <Star size={32} className="text-[#EC6707]" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-xl font-bold text-[#0F172A] mb-6">Үнэт зүйлс</h3>
+                <h3 className="text-xl font-bold text-[#000000] mb-6">Үнэт зүйлс</h3>
                 <p className="text-[15px] text-[#334155] leading-relaxed flex-grow">
                   Тогтвортой хөгжил, Хамтын зүтгэл, Дэвшилтэт технологи, Чанар, Ёс зүй, Хүндэтгэл
                 </p>
@@ -253,10 +253,10 @@ export default function AboutPage() {
       <section className="w-full py-24 bg-[#F0F4F8]">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Reveal className="text-center mb-6">
-            <span className="text-[11px] font-semibold tracking-[0.2em] text-[#1E3A5F] uppercase mb-4 block">
+            <span className="text-[11px] font-semibold tracking-[0.2em] text-[#EC6707] uppercase mb-4 block">
               Тоогоор
             </span>
-            <h2 className="text-xl font-bold text-[#0F172A] tracking-tight">
+            <h2 className="text-xl font-bold text-[#000000] tracking-tight">
               Бидний ололт амжилт
             </h2>
           </Reveal>
@@ -270,10 +270,10 @@ export default function AboutPage() {
             ].map((stat, index) => (
               <Reveal key={stat.label} delay={index * 0.1}>
                 <div className="bg-[#F0F4F8] border border-[#E2E8F0] rounded-2xl text-center p-5 shadow-sm">
-                  <div className="text-4xl lg:text-5xl font-bold text-[#1E3A5F] mb-4 tracking-tight">
+                  <div className="text-4xl lg:text-5xl font-bold text-[#EC6707] mb-4 tracking-tight">
                     <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                   </div>
-                  <div className="h-px w-12 bg-[#1E3A5F]/20 mx-auto mb-4" />
+                  <div className="h-px w-12 bg-[#EC6707]/20 mx-auto mb-4" />
                   <div className="text-[12px] text-[#64748B] tracking-[0.15em] uppercase">
                     {stat.label}
                   </div>
@@ -288,11 +288,11 @@ export default function AboutPage() {
       <section className="w-full py-12 lg:py-24 bg-[#F0F4F8]">
         <div className="mx-auto max-w-5xl px-6 lg:px-8">
           <Reveal className="text-center mb-5">
-            <span className="text-[11px] font-semibold tracking-[0.2em] text-[#1E3A5F] uppercase mb-4 block">
+            <span className="text-[11px] font-semibold tracking-[0.2em] text-[#EC6707] uppercase mb-4 block">
               Бидний аялал
             </span>
-            <h2 className="text-3xl lg:text-xl font-bold text-[#0F172A] tracking-tight">
-              <span className="text-[#1E3A5F]">Бидний түүх</span>
+            <h2 className="text-3xl lg:text-xl font-bold text-[#000000] tracking-tight">
+              <span className="text-[#EC6707]">Бидний түүх</span>
             </h2>
           </Reveal>
 
@@ -303,7 +303,7 @@ export default function AboutPage() {
               {timeline.map((item, index) => (
                 <Reveal key={item.year} delay={index * 0.08}>
                   <div className="relative flex items-start lg:items-center gap-5 lg:gap-0 py-4">
-                    <div className="absolute left-6 lg:left-1/2 top-5 lg:top-1/2 -translate-x-1/2 lg:-translate-y-1/2 w-6 h-6 rounded-full bg-[#C9A227] border-3 border-white z-10 shrink-0 shadow-[0_0_12px_rgba(201,162,39,0.5)]" />
+                    <div className="absolute left-6 lg:left-1/2 top-5 lg:top-1/2 -translate-x-1/2 lg:-translate-y-1/2 w-6 h-6 rounded-full bg-[#EC6707] border-3 border-white z-10 shrink-0 shadow-[0_0_12px_rgba(201,162,39,0.5)]" />
 
                     <div
                       className={`pl-14 lg:pl-0 lg:w-1/2 ${
@@ -313,10 +313,10 @@ export default function AboutPage() {
                       }`}
                     >
                       <div className="inline-block text-left">
-                        <span className="text-[11px] font-semibold text-[#C9A227] tracking-wider uppercase">
+                        <span className="text-[11px] font-semibold text-[#EC6707] tracking-wider uppercase">
                           {item.year}
                         </span>
-                        <h3 className="text-base font-semibold text-[#0F172A] mt-1 leading-snug">
+                        <h3 className="text-base font-semibold text-[#000000] mt-1 leading-snug">
                           {item.title}
                         </h3>
                         <p className="text-[13px] text-[#64748B] leading-relaxed mt-1 max-w-xs">
@@ -337,9 +337,9 @@ export default function AboutPage() {
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
           {/* Title with lines */}
           <Reveal className="flex items-center justify-center gap-4 mb-6">
-            <div className="h-px w-32 bg-[#1E3A5F]" />
-            <h2 className="text-3xl lg:text-xl font-bold text-[#1E3A5F] tracking-tight">Удирдлагын баг</h2>
-            <div className="h-px w-32 bg-[#1E3A5F]" />
+            <div className="h-px w-32 bg-[#EC6707]" />
+            <h2 className="text-3xl lg:text-xl font-bold text-[#EC6707] tracking-tight">Удирдлагын баг</h2>
+            <div className="h-px w-32 bg-[#EC6707]" />
           </Reveal>
 
           {/* Team Grid - Hierarchical Layout */}
@@ -351,7 +351,7 @@ export default function AboutPage() {
                   <div className="relative bg-[#F0F4F8] rounded-lg shadow-md p-4 pt-0 w-[280px]">
                     {/* Blue line with overlapping circle */}
                     <div className="relative h-16 flex items-center justify-center">
-                      <div className="absolute top-5 left-0 right-0 h-0.5 bg-[#1E3A5F]" />
+                      <div className="absolute top-5 left-0 right-0 h-0.5 bg-[#EC6707]" />
                       <div className="relative z-10 w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-lg">
                         <div 
                           className="w-full h-full bg-cover bg-center"
@@ -360,7 +360,7 @@ export default function AboutPage() {
                       </div>
                     </div>
                     <div className="text-center mt-4">
-                      <h3 className="text-lg font-bold text-[#0F172A] mb-1">{member.name}</h3>
+                      <h3 className="text-lg font-bold text-[#000000] mb-1">{member.name}</h3>
                       <p className="text-sm text-[#64748B]">{member.role}</p>
                     </div>
                   </div>
@@ -374,7 +374,7 @@ export default function AboutPage() {
                 <Reveal key={member.name} delay={index * 0.1}>
                   <div className="relative bg-[#F0F4F8] rounded-lg shadow-md p-4 pt-0 w-[260px]">
                     <div className="relative h-16 flex items-center justify-center">
-                      <div className="absolute top-5 left-0 right-0 h-0.5 bg-[#1E3A5F]" />
+                      <div className="absolute top-5 left-0 right-0 h-0.5 bg-[#EC6707]" />
                       <div className="relative z-10 w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-lg">
                         <div 
                           className="w-full h-full bg-cover bg-center"
@@ -383,7 +383,7 @@ export default function AboutPage() {
                       </div>
                     </div>
                     <div className="text-center mt-4">
-                      <h3 className="text-lg font-bold text-[#0F172A] mb-1">{member.name}</h3>
+                      <h3 className="text-lg font-bold text-[#000000] mb-1">{member.name}</h3>
                       <p className="text-sm text-[#64748B]">{member.role}</p>
                     </div>
                   </div>
@@ -397,7 +397,7 @@ export default function AboutPage() {
                 <Reveal key={member.name} delay={index * 0.1}>
                   <div className="relative bg-[#F0F4F8] rounded-lg shadow-md p-4 pt-0 w-[260px]">
                     <div className="relative h-16 flex items-center justify-center">
-                      <div className="absolute top-5 left-0 right-0 h-0.5 bg-[#1E3A5F]" />
+                      <div className="absolute top-5 left-0 right-0 h-0.5 bg-[#EC6707]" />
                       <div className="relative z-10 w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-lg">
                         <div 
                           className="w-full h-full bg-cover bg-center"
@@ -406,7 +406,7 @@ export default function AboutPage() {
                       </div>
                     </div>
                     <div className="text-center mt-4">
-                      <h3 className="text-lg font-bold text-[#0F172A] mb-1">{member.name}</h3>
+                      <h3 className="text-lg font-bold text-[#000000] mb-1">{member.name}</h3>
                       <p className="text-sm text-[#64748B]">{member.role}</p>
                     </div>
                   </div>
@@ -420,7 +420,7 @@ export default function AboutPage() {
                 <Reveal key={member.name} delay={index * 0.1}>
                   <div className="relative bg-[#F0F4F8] rounded-lg shadow-md p-4 pt-0 w-[260px]">
                     <div className="relative h-16 flex items-center justify-center">
-                      <div className="absolute top-5 left-0 right-0 h-0.5 bg-[#1E3A5F]" />
+                      <div className="absolute top-5 left-0 right-0 h-0.5 bg-[#EC6707]" />
                       <div className="relative z-10 w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-lg">
                         <div 
                           className="w-full h-full bg-cover bg-center"
@@ -429,7 +429,7 @@ export default function AboutPage() {
                       </div>
                     </div>
                     <div className="text-center mt-4">
-                      <h3 className="text-lg font-bold text-[#0F172A] mb-1">{member.name}</h3>
+                      <h3 className="text-lg font-bold text-[#000000] mb-1">{member.name}</h3>
                       <p className="text-sm text-[#64748B]">{member.role}</p>
                     </div>
                   </div>
@@ -444,10 +444,10 @@ export default function AboutPage() {
       <section className="w-full py-16 lg:py-12 bg-[#F0F4F8]">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Reveal className="text-center mb-5">
-            <span className="text-[11px] font-semibold tracking-[0.2em] text-[#1E3A5F] uppercase mb-4 block">
+            <span className="text-[11px] font-semibold tracking-[0.2em] text-[#EC6707] uppercase mb-4 block">
               Бизнес салбар
             </span>
-            <h2 className="text-3xl lg:text-xl font-bold text-[#0F172A] tracking-tight">
+            <h2 className="text-3xl lg:text-xl font-bold text-[#000000] tracking-tight">
               Олон талт чадвар
             </h2>
           </Reveal>
@@ -458,9 +458,9 @@ export default function AboutPage() {
                 <Reveal key={sector.title} delay={index * 0.1}>
                   <div className="bg-[#F0F4F8] rounded-2xl p-5 lg:p-4 text-center shadow-sm border border-[#E2E8F0] hover:shadow-md transition-shadow duration-300">
                     <div className="w-14 h-14 rounded-xl bg-[#F5F3ED] flex items-center justify-center mx-auto mb-6">
-                      <Icon size={24} className="text-[#1E3A5F]" strokeWidth={1.5} />
+                      <Icon size={24} className="text-[#EC6707]" strokeWidth={1.5} />
                     </div>
-                    <h3 className="text-lg font-semibold text-[#0F172A] mb-2">
+                    <h3 className="text-lg font-semibold text-[#000000] mb-2">
                       {sector.title}
                     </h3>
                     <p className="text-sm text-[#64748B]">{sector.desc}</p>
@@ -476,10 +476,10 @@ export default function AboutPage() {
       <section className="w-full py-16 lg:py-12 bg-[#E8EEF4]">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Reveal className="text-center mb-5">
-            <span className="text-[11px] font-semibold tracking-[0.2em] text-[#1E3A5F] uppercase mb-4 block">
+            <span className="text-[11px] font-semibold tracking-[0.2em] text-[#EC6707] uppercase mb-4 block">
               Хүлээн зөвшөөрөл
             </span>
-            <h2 className="text-3xl lg:text-xl font-bold text-[#0F172A] tracking-tight">
+            <h2 className="text-3xl lg:text-xl font-bold text-[#000000] tracking-tight">
               Шагнал, сертификат
             </h2>
           </Reveal>
@@ -490,9 +490,9 @@ export default function AboutPage() {
                 <Reveal key={ach.title} delay={index * 0.1}>
                   <div className="bg-[#F0F4F8] rounded-2xl p-4 text-center shadow-sm border border-[#E2E8F0]">
                     <div className="w-16 h-16 rounded-full bg-[#F5F3ED] flex items-center justify-center mx-auto mb-6">
-                      <Icon size={28} className="text-[#1E3A5F]" strokeWidth={1.5} />
+                      <Icon size={28} className="text-[#EC6707]" strokeWidth={1.5} />
                     </div>
-                    <h3 className="text-lg font-semibold text-[#0F172A] mb-2">
+                    <h3 className="text-lg font-semibold text-[#000000] mb-2">
                       {ach.title}
                     </h3>
                     <p className="text-sm text-[#64748B]">{ach.org}</p>
@@ -505,25 +505,25 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="relative w-full py-16 lg:py-12 overflow-hidden bg-[#0F172A]">
+      <section className="relative w-full py-16 lg:py-12 overflow-hidden bg-[#000000]">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-10"
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80')" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0F172A]/80 via-[#0F172A]/60 to-[#0F172A]/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/80 via-[#000000]/60 to-[#000000]/80" />
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8 text-center">
           <Reveal>
             <h2 className="text-4xl lg:text-6xl font-bold text-white leading-tight mb-5 tracking-tight">
               Ирээдүйг
               <br />
-              <span className="text-[#C9A227]">хамтдаа бүтээе</span>
+              <span className="text-[#EC6707]">хамтдаа бүтээе</span>
             </h2>
             <p className="text-lg text-white/60 mb-5 max-w-xl mx-auto leading-relaxed">
               Монгол Улсын тэргүүлэгч барилгын компанитай хамтран ажиллаарай.
             </p>
             <Link
               href={`/${locale}/contact`}
-              className="group inline-flex items-center gap-3 px-10 py-5 bg-[#1E3A5F] text-white text-sm font-semibold tracking-wide hover:bg-[#152A45] transition-all duration-500 rounded-sm"
+              className="group inline-flex items-center gap-3 px-10 py-5 bg-[#EC6707] text-white text-sm font-semibold tracking-wide hover:bg-[#B35405] transition-all duration-500 rounded-sm"
             >
               Холбоо барих
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />

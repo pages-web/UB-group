@@ -37,7 +37,7 @@ export default async function LocaleLayout({
       lang={locale}
       className={`${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#F0F4F8] text-[#0F172A] font-sans">
+      <body className="min-h-full flex flex-col bg-[#F0F4F8] text-[#000000] font-sans">
         <NextIntlClientProvider messages={messages}>
           <ApolloClientProvider>
             <Header />

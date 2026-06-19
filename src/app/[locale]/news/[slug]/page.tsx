@@ -81,12 +81,12 @@ export default async function NewsDetailPage({
 
   return (
     <>
-      <section className="relative w-full pt-28 pb-16 sm:pb-20 overflow-hidden bg-[#0A1628]">
+      <section className="relative w-full pt-28 pb-16 sm:pb-20 overflow-hidden bg-[#000000]">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-25"
           style={{ backgroundImage: `url('${article.image}')` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0A1628]/70 via-[#0A1628]/50 to-[#0A1628]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/70 via-[#000000]/50 to-[#000000]" />
         <div className="relative mx-auto max-w-4xl px-6 lg:px-8">
           <Link
             href={`/${locale}/news`}
@@ -95,7 +95,7 @@ export default async function NewsDetailPage({
             <ArrowLeft size={16} />
             {isMn ? "Бүх мэдээ" : "All News"}
           </Link>
-          <div className="flex items-center gap-2 text-[12px] text-[#C9A227] mb-4">
+          <div className="flex items-center gap-2 text-[12px] text-[#EC6707] mb-4">
             <Calendar size={13} />
             {article.date}
           </div>

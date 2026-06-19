@@ -71,19 +71,19 @@ export default function NewsPage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative w-full pt-24 pb-16 overflow-hidden bg-[#0F172A]">
+      <section className="relative w-full pt-24 pb-16 overflow-hidden bg-[#000000]">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-30"
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1920&q=80')" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0F172A]/70 via-[#0F172A]/40 to-[#0F172A]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/70 via-[#000000]/40 to-[#000000]" />
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="text-[11px] font-semibold tracking-[0.25em] text-[#C9A227] uppercase mb-6 block">Мэдээ мэдээлэл</span>
+            <span className="text-[11px] font-semibold tracking-[0.25em] text-[#EC6707] uppercase mb-6 block">Мэдээ мэдээлэл</span>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5 tracking-tight">
               Мэдээ
             </h1>
@@ -104,9 +104,9 @@ export default function NewsPage() {
                     <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
                       style={{ backgroundImage: `url('${item.image}')` }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/60 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/60 to-transparent" />
                     <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1.5 bg-[#1E3A5F]/90 backdrop-blur-sm text-white text-[11px] font-medium tracking-wider uppercase rounded-full">
+                      <span className="px-3 py-1.5 bg-[#EC6707]/90 backdrop-blur-sm text-white text-[11px] font-medium tracking-wider uppercase rounded-full">
                         {item.category}
                       </span>
                     </div>
@@ -116,12 +116,12 @@ export default function NewsPage() {
                       <Calendar size={12} />
                       {item.date}
                     </div>
-                    <h3 className="text-xl font-semibold text-[#0F172A] mb-3 group-hover:text-[#1E3A5F] transition-colors duration-300 line-clamp-2"
+                    <h3 className="text-xl font-semibold text-[#000000] mb-3 group-hover:text-[#EC6707] transition-colors duration-300 line-clamp-2"
                     >
                       {item.title}
                     </h3>
                     <p className="text-[14px] text-[#64748B] line-clamp-3 mb-4">{item.excerpt}</p>
-                    <div className="flex items-center gap-1 text-[#1E3A5F] text-sm font-medium">
+                    <div className="flex items-center gap-1 text-[#EC6707] text-sm font-medium">
                       Дэлгэрэнгүй
                       <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                     </div>

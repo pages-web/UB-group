@@ -90,23 +90,23 @@ export default function SustainabilityPage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative w-full pt-24 pb-16 overflow-hidden bg-[#0F172A]">
+      <section className="relative w-full pt-24 pb-16 overflow-hidden bg-[#000000]">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-30"
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=1920&q=80')" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0F172A]/70 via-[#0F172A]/40 to-[#0F172A]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/70 via-[#000000]/40 to-[#000000]" />
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="text-[11px] font-semibold tracking-[0.25em] text-[#C9A227] uppercase mb-6 block">Тогтвортой хөгжил</span>
+            <span className="text-[11px] font-semibold tracking-[0.25em] text-[#EC6707] uppercase mb-6 block">Тогтвортой хөгжил</span>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5 tracking-tight">
               Ирээдүйг
               <br />
-              <span className="text-[#C9A227]">хамгаална</span>
+              <span className="text-[#EC6707]">хамгаална</span>
             </h1>
             <p className="text-lg text-white/70 max-w-xl mx-auto leading-relaxed">
               Бид эдийн засаг, нийгэм, байгаль орчинд урт хугацааны эерэг нөлөө үзүүлэхийг зорин ажилладаг.
@@ -119,8 +119,8 @@ export default function SustainabilityPage() {
       <section className="w-full py-16 lg:py-12 bg-[#F0F4F8]">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Reveal className="text-center mb-5">
-            <span className="text-[11px] font-semibold tracking-[0.25em] text-[#1E3A5F] uppercase mb-4 block">Баримтлах зарчим</span>
-            <h2 className="text-3xl lg:text-xl font-bold text-[#0F172A] tracking-tight">Бидний үндэс</h2>
+            <span className="text-[11px] font-semibold tracking-[0.25em] text-[#EC6707] uppercase mb-4 block">Баримтлах зарчим</span>
+            <h2 className="text-3xl lg:text-xl font-bold text-[#000000] tracking-tight">Бидний үндэс</h2>
           </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -130,9 +130,9 @@ export default function SustainabilityPage() {
                 <Reveal key={principle.title} delay={index * 0.1}>
                   <div className="bg-[#E8EEF4] rounded-2xl p-4 text-center h-full border border-[#E2E8F0] hover:shadow-lg transition-all duration-500">
                     <div className="w-16 h-16 rounded-full bg-[#F5F3ED] flex items-center justify-center mx-auto mb-6">
-                      <Icon size={28} className="text-[#1E3A5F]" strokeWidth={1.5} />
+                      <Icon size={28} className="text-[#EC6707]" strokeWidth={1.5} />
                     </div>
-                    <h3 className="text-xl font-semibold text-[#0F172A] mb-4">{principle.title}</h3>
+                    <h3 className="text-xl font-semibold text-[#000000] mb-4">{principle.title}</h3>
                     <p className="text-[14px] text-[#64748B] leading-relaxed">{principle.desc}</p>
                   </div>
                 </Reveal>
@@ -146,8 +146,8 @@ export default function SustainabilityPage() {
       <section className="w-full py-16 lg:py-12 bg-[#E8EEF4]">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Reveal className="text-center mb-5">
-            <span className="text-[11px] font-semibold tracking-[0.25em] text-[#1E3A5F] uppercase mb-4 block">Төслүүд</span>
-            <h2 className="text-3xl lg:text-xl font-bold text-[#0F172A] tracking-tight">Нэвтрүүлж буй төслүүд</h2>
+            <span className="text-[11px] font-semibold tracking-[0.25em] text-[#EC6707] uppercase mb-4 block">Төслүүд</span>
+            <h2 className="text-3xl lg:text-xl font-bold text-[#000000] tracking-tight">Нэвтрүүлж буй төслүүд</h2>
           </Reveal>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
@@ -160,11 +160,11 @@ export default function SustainabilityPage() {
                     <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
                       style={{ backgroundImage: `url('${project.image}')` }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/60 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/60 to-transparent" />
                   </div>
                   <div className="p-5">
-                    <div className="text-[11px] text-[#1E3A5F] font-medium tracking-wider uppercase mb-3">{project.location}</div>
-                    <h3 className="text-xl font-semibold text-[#0F172A] mb-3">{project.title}</h3>
+                    <div className="text-[11px] text-[#EC6707] font-medium tracking-wider uppercase mb-3">{project.location}</div>
+                    <h3 className="text-xl font-semibold text-[#000000] mb-3">{project.title}</h3>
                     <p className="text-[14px] text-[#64748B]">{project.description}</p>
                   </div>
                 </div>
@@ -178,15 +178,15 @@ export default function SustainabilityPage() {
       <section className="w-full py-24 bg-[#F0F4F8]">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Reveal className="text-center mb-6">
-            <span className="text-[11px] font-semibold tracking-[0.25em] text-[#1E3A5F] uppercase mb-4 block">Хүртсэн нөлөө</span>
-            <h2 className="text-xl font-bold text-[#0F172A] tracking-tight">Бидний ололт</h2>
+            <span className="text-[11px] font-semibold tracking-[0.25em] text-[#EC6707] uppercase mb-4 block">Хүртсэн нөлөө</span>
+            <h2 className="text-xl font-bold text-[#000000] tracking-tight">Бидний ололт</h2>
           </Reveal>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
             {stats.map((stat, index) => (
               <Reveal key={stat.label} delay={index * 0.1}>
                 <div className="text-center p-5">
-                  <div className="text-4xl lg:text-5xl font-bold text-[#1E3A5F] mb-4 tracking-tight">{stat.value}</div>
-                  <div className="h-px w-12 bg-[#1E3A5F]/20 mx-auto mb-4" />
+                  <div className="text-4xl lg:text-5xl font-bold text-[#EC6707] mb-4 tracking-tight">{stat.value}</div>
+                  <div className="h-px w-12 bg-[#EC6707]/20 mx-auto mb-4" />
                   <div className="text-[14px] text-[#64748B]">{stat.label}</div>
                 </div>
               </Reveal>
@@ -199,8 +199,8 @@ export default function SustainabilityPage() {
       <section className="w-full py-16 lg:py-12 bg-[#E8EEF4]">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Reveal className="text-center mb-5">
-            <span className="text-[11px] font-semibold tracking-[0.25em] text-[#1E3A5F] uppercase mb-4 block">Тайлан мэдээ</span>
-            <h2 className="text-3xl lg:text-xl font-bold text-[#0F172A] tracking-tight">Тайлангууд</h2>
+            <span className="text-[11px] font-semibold tracking-[0.25em] text-[#EC6707] uppercase mb-4 block">Тайлан мэдээ</span>
+            <h2 className="text-3xl lg:text-xl font-bold text-[#000000] tracking-tight">Тайлангууд</h2>
           </Reveal>
 
           <div className="space-y-4">
@@ -210,14 +210,14 @@ export default function SustainabilityPage() {
                 >
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-xl bg-[#F5F3ED] flex items-center justify-center">
-                      <FileText size={20} className="text-[#1E3A5F]" />
+                      <FileText size={20} className="text-[#EC6707]" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-[#0F172A]">{report.title}</h3>
+                      <h3 className="text-lg font-semibold text-[#000000]">{report.title}</h3>
                       <p className="text-sm text-[#64748B]">{report.date} • {report.size}</p>
                     </div>
                   </div>
-                  <button className="flex items-center gap-2 px-4 py-2 bg-[#1E3A5F] text-white text-sm font-medium rounded-lg hover:bg-[#152A45] transition-colors">
+                  <button className="flex items-center gap-2 px-4 py-2 bg-[#EC6707] text-white text-sm font-medium rounded-lg hover:bg-[#B35405] transition-colors">
                     <Download size={16} />
                     Татах
                   </button>

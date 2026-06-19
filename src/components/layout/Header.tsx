@@ -54,7 +54,7 @@ export default function Header() {
             <Link href={`/${locale}`} className="flex items-center gap-3 group">
               <div className="flex flex-col">
                 <span className={`text-xl font-bold tracking-[0.15em] transition-colors duration-300 ${
-                  scrolled ? "text-[#1E3A5F]" : "text-white"
+                  scrolled ? "text-[#EC6707]" : "text-white"
                 }`}
                 >
                   UB GROUP
@@ -73,8 +73,8 @@ export default function Header() {
                     className={`relative px-4 py-2 text-[13px] font-medium tracking-wide transition-all duration-300 rounded-full ${
                       scrolled
                         ? isActive
-                          ? "text-[#1E3A5F]"
-                          : "text-[#334155] hover:text-[#1E3A5F]"
+                          ? "text-[#EC6707]"
+                          : "text-[#334155] hover:text-[#EC6707]"
                         : isActive
                         ? "text-white"
                         : "text-white/70 hover:text-white"
@@ -85,7 +85,7 @@ export default function Header() {
                       <motion.div
                         layoutId="activeNav"
                         className={`absolute inset-0 rounded-full -z-10 ${
-                          scrolled ? "bg-[#1E3A5F]/10" : "bg-white/15"
+                          scrolled ? "bg-[#EC6707]/10" : "bg-white/15"
                         }`}
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
@@ -101,9 +101,9 @@ export default function Header() {
                 onClick={() => switchLocale("mn")}
                 className={`px-3 py-1.5 text-[11px] font-semibold tracking-wider rounded-full transition-all duration-300 ${
                   locale === "mn"
-                    ? "bg-[#1E3A5F] text-white"
+                    ? "bg-[#EC6707] text-white"
                     : scrolled
-                    ? "text-[#64748B] hover:text-[#0F172A]"
+                    ? "text-[#64748B] hover:text-[#000000]"
                     : "text-white/60 hover:text-white"
                 }`}
               >
@@ -113,9 +113,9 @@ export default function Header() {
                 onClick={() => switchLocale("en")}
                 className={`px-3 py-1.5 text-[11px] font-semibold tracking-wider rounded-full transition-all duration-300 ${
                   locale === "en"
-                    ? "bg-[#1E3A5F] text-white"
+                    ? "bg-[#EC6707] text-white"
                     : scrolled
-                    ? "text-[#64748B] hover:text-[#0F172A]"
+                    ? "text-[#64748B] hover:text-[#000000]"
                     : "text-white/60 hover:text-white"
                 }`}
               >
@@ -126,7 +126,7 @@ export default function Header() {
             {/* Mobile menu button */}
             <button
               className={`lg:hidden p-2 transition-colors ${
-                scrolled ? "text-[#0F172A]" : "text-white"
+                scrolled ? "text-[#000000]" : "text-white"
               }`}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
@@ -164,7 +164,7 @@ export default function Header() {
                   >
                     <Link
                       href={`/${locale}${item.href}`}
-                      className="block text-lg font-medium text-[#0F172A] hover:text-[#1E3A5F] py-4 border-b border-[#E2E8F0] transition-colors"
+                      className="block text-lg font-medium text-[#000000] hover:text-[#EC6707] py-4 border-b border-[#E2E8F0] transition-colors"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       {item.label}
@@ -176,7 +176,7 @@ export default function Header() {
                 <button
                   onClick={() => switchLocale("mn")}
                   className={`px-4 py-2 text-sm font-semibold tracking-wider rounded-full transition-all ${
-                    locale === "mn" ? "bg-[#1E3A5F] text-white" : "text-[#64748B]"
+                    locale === "mn" ? "bg-[#EC6707] text-white" : "text-[#64748B]"
                   }`}
                 >
                   MN
@@ -184,7 +184,7 @@ export default function Header() {
                 <button
                   onClick={() => switchLocale("en")}
                   className={`px-4 py-2 text-sm font-semibold tracking-wider rounded-full transition-all ${
-                    locale === "en" ? "bg-[#1E3A5F] text-white" : "text-[#64748B]"
+                    locale === "en" ? "bg-[#EC6707] text-white" : "text-[#64748B]"
                   }`}
                 >
                   EN

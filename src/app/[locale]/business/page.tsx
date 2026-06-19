@@ -692,7 +692,7 @@ function SubCategoryAccordion({
         <span className="text-[13px] font-medium text-[#64748B]">{sub.name}</span>
         <ChevronDown
           size={14}
-          className={`text-[#1E3A5F] transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+          className={`text-[#EC6707] transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
         />
       </button>
 
@@ -712,8 +712,8 @@ function SubCategoryAccordion({
                   onClick={() => onSelectProject(project)}
                   className={`w-full text-left px-4 py-2 rounded-lg transition-colors text-[14px] ${
                     selectedProjectId === project.id
-                      ? "bg-[#F5F3ED] text-[#1E3A5F] font-medium"
-                      : "text-[#334155] hover:bg-[#E8EEF4] hover:text-[#1E3A5F]"
+                      ? "bg-[#F5F3ED] text-[#EC6707] font-medium"
+                      : "text-[#334155] hover:bg-[#E8EEF4] hover:text-[#EC6707]"
                   }`}
                 >
                   {project.name}
@@ -747,10 +747,10 @@ function AccordionItem({
         onClick={onToggle}
         className="w-full flex items-center justify-between py-4 px-2 hover:bg-[#E8EEF4] transition-colors"
       >
-        <span className="text-[15px] font-medium text-[#0F172A]">{sector.name}</span>
+        <span className="text-[15px] font-medium text-[#000000]">{sector.name}</span>
         <ChevronDown
           size={18}
-          className={`text-[#1E3A5F] transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+          className={`text-[#EC6707] transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
         />
       </button>
 
@@ -781,8 +781,8 @@ function AccordionItem({
                   onClick={() => onSelectProject(project)}
                   className={`w-full text-left px-4 py-2.5 rounded-lg transition-colors text-[14px] mb-0.5 ${
                     selectedProjectId === project.id
-                      ? "bg-[#F5F3ED] text-[#1E3A5F] font-medium"
-                      : "text-[#334155] hover:bg-[#E8EEF4] hover:text-[#1E3A5F]"
+                      ? "bg-[#F5F3ED] text-[#EC6707] font-medium"
+                      : "text-[#334155] hover:bg-[#E8EEF4] hover:text-[#EC6707]"
                   }`}
                 >
                   {project.name}
@@ -819,7 +819,7 @@ function ProjectDetail({
           onClick={onClose}
           className="absolute top-4 right-4 z-10 p-2 bg-white/90 hover:bg-white rounded-full transition-colors shadow-lg"
         >
-          <X size={18} className="text-[#0F172A]" />
+          <X size={18} className="text-[#000000]" />
         </button>
       </div>
 
@@ -846,7 +846,7 @@ function ProjectDetail({
         )}
 
         {/* Title */}
-        <h2 className="text-xl font-bold text-[#0F172A] mb-2">{project.name}</h2>
+        <h2 className="text-xl font-bold text-[#000000] mb-2">{project.name}</h2>
         
         {/* Description */}
         {project.description && (
@@ -855,7 +855,7 @@ function ProjectDetail({
 
         {/* Location */}
         {project.location && (
-          <div className="flex items-center gap-2 text-sm text-[#1E3A5F] mb-6">
+          <div className="flex items-center gap-2 text-sm text-[#EC6707] mb-6">
             <MapPin size={16} />
             {project.location}
           </div>
@@ -864,11 +864,11 @@ function ProjectDetail({
         {/* Features */}
         {project.features && project.features.length > 0 && (
           <div className="mb-6">
-            <h3 className="text-[13px] font-semibold text-[#0F172A] mb-3">Төслийн онцлог</h3>
+            <h3 className="text-[13px] font-semibold text-[#000000] mb-3">Төслийн онцлог</h3>
             <ul className="space-y-2">
               {project.features.map((feature, index) => (
                 <li key={index} className="flex items-start gap-2 text-[14px] text-[#334155]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#1E3A5F] mt-1.5 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#EC6707] mt-1.5 flex-shrink-0" />
                   {feature}
                 </li>
               ))}
@@ -882,7 +882,7 @@ function ProjectDetail({
             href={project.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#1E3A5F] text-white text-sm font-medium rounded-lg hover:bg-[#152A45] transition-colors mb-6"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-[#EC6707] text-white text-sm font-medium rounded-lg hover:bg-[#B35405] transition-colors mb-6"
           >
             Төслийн вэб рүү зочлох
             <ExternalLink size={16} />
@@ -892,7 +892,7 @@ function ProjectDetail({
         {/* Map */}
         {project.mapUrl && (
           <div className="mt-4">
-            <h3 className="text-[13px] font-semibold text-[#0F172A] mb-3">Байршил</h3>
+            <h3 className="text-[13px] font-semibold text-[#000000] mb-3">Байршил</h3>
             <div className="relative h-48 bg-[#E8EEF4] rounded-lg overflow-hidden">
               <iframe
                 src={project.mapUrl}
@@ -919,12 +919,12 @@ export default function BusinessPage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative w-full pt-24 pb-16 overflow-hidden bg-[#0F172A]">
+      <section className="relative w-full pt-24 pb-16 overflow-hidden bg-[#000000]">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-40"
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80')" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0F172A]/70 via-[#0F172A]/40 to-[#0F172A]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/70 via-[#000000]/40 to-[#000000]" />
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

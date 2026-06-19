@@ -50,7 +50,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="w-full bg-[#1E3A5F]">
+    <footer className="w-full bg-[#EC6707]">
       <div className="mx-auto max-w-7xl px-6 lg:px-8 py-14 lg:py-18">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Logo */}
@@ -119,7 +119,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-[#1E3A5F] transition-all duration-300"
+                    className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-[#EC6707] transition-all duration-300"
                   >
                     <Icon size={18} />
                   </a>

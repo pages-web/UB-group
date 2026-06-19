@@ -127,9 +127,9 @@ function HeroSlider({ locale }: { locale: string }) {
   const slide = heroSlides[current];
 
   return (
-    <section className="w-full bg-[#0A1628]">
+    <section className="w-full bg-[#000000]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 lg:pt-32 pb-6 sm:pb-8">
-        <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] md:aspect-[2.4/1] max-h-[75vh] overflow-hidden rounded-3xl sm:rounded-[40px] bg-[#0A1628]">
+        <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] md:aspect-[2.4/1] max-h-[75vh] overflow-hidden rounded-3xl sm:rounded-[40px] bg-[#000000]">
           <AnimatePresence mode="wait">
             <motion.div
               key={slide.id}
@@ -142,7 +142,7 @@ function HeroSlider({ locale }: { locale: string }) {
             />
           </AnimatePresence>
 
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/90 via-[#0A1628]/30 to-[#0A1628]/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/90 via-[#000000]/30 to-[#000000]/20" />
 
           <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-10 lg:p-14">
             <motion.div
@@ -152,7 +152,7 @@ function HeroSlider({ locale }: { locale: string }) {
               transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="max-w-2xl"
             >
-              <span className="inline-block px-3 py-1.5 bg-[#C9A227]/90 text-white text-[11px] font-semibold tracking-wider uppercase rounded-full mb-4">
+              <span className="inline-block px-3 py-1.5 bg-[#EC6707]/90 text-white text-[11px] font-semibold tracking-wider uppercase rounded-full mb-4">
                 {isMn ? "Онцлох төсөл" : "Featured Project"}
               </span>
               <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-3 tracking-tight">
@@ -166,7 +166,7 @@ function HeroSlider({ locale }: { locale: string }) {
               </p>
               <Link
                 href={`/${locale}/projects`}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-[#1E3A5F] text-sm font-semibold rounded-full hover:bg-[#F0F4F8] transition-colors w-fit"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-[#EC6707] text-sm font-semibold rounded-full hover:bg-[#F0F4F8] transition-colors w-fit"
               >
                 {isMn ? "Төслүүд" : "Projects"}
                 <ArrowRight size={16} />
@@ -221,8 +221,8 @@ function MarqueeLogos({ locale }: { locale: string }) {
             className="flex-shrink-0 w-[180px] sm:w-[220px] h-[100px] sm:h-[120px] mx-4 flex items-center justify-center bg-white rounded-lg border border-[#E2E8F0] shadow-sm hover:shadow-md transition-shadow"
           >
             <div className="text-center px-4">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 rounded-full bg-[#1E3A5F]/10 flex items-center justify-center">
-                <span className="text-[#1E3A5F] font-bold text-sm sm:text-base">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 rounded-full bg-[#EC6707]/10 flex items-center justify-center">
+                <span className="text-[#EC6707] font-bold text-sm sm:text-base">
                   {company.name.charAt(0)}
                 </span>
               </div>
@@ -265,10 +265,10 @@ export default function HomePage() {
       <section className="w-full py-20 sm:py-24 bg-[#F5F7FA]">
         <div className="mx-auto max-w-7xl px-6 lg:px-8 mb-10 sm:mb-12">
           <Reveal className="text-center max-w-2xl mx-auto">
-            <span className="text-[11px] font-semibold tracking-[0.25em] text-[#1E3A5F] uppercase mb-4 block">
+            <span className="text-[11px] font-semibold tracking-[0.25em] text-[#EC6707] uppercase mb-4 block">
               {isMn ? "Компаниуд" : "Companies"}
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#0A1628] tracking-tight mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#000000] tracking-tight mb-4">
               {isMn ? "Компаниуд болон охин компаниуд" : "Companies & Subsidiaries"}
             </h2>
             <p className="text-[#5A6B7C]">
@@ -287,16 +287,16 @@ export default function HomePage() {
           <Reveal className="mb-10 sm:mb-12">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
               <div>
-                <span className="text-[11px] font-semibold tracking-[0.25em] text-[#1E3A5F] uppercase mb-4 block">
+                <span className="text-[11px] font-semibold tracking-[0.25em] text-[#EC6707] uppercase mb-4 block">
                   {isMn ? "Мэдээ мэдээлэл" : "News & Updates"}
                 </span>
-                <h2 className="text-3xl sm:text-4xl font-bold text-[#0A1628] tracking-tight">
+                <h2 className="text-3xl sm:text-4xl font-bold text-[#000000] tracking-tight">
                   {isMn ? "Мэдээ, мэдээлэл" : "Latest News"}
                 </h2>
               </div>
               <Link
                 href={`/${locale}/news`}
-                className="inline-flex items-center gap-2 text-[#1E3A5F] text-sm font-medium hover:text-[#0F2744] transition-colors"
+                className="inline-flex items-center gap-2 text-[#EC6707] text-sm font-medium hover:text-[#B35405] transition-colors"
               >
                 {isMn ? "Бүх мэдээ" : "All News"}
                 <ArrowRight size={16} />
@@ -316,13 +316,13 @@ export default function HomePage() {
                       className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
                       style={{ backgroundImage: `url('${item.image}')` }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
                   <div className="flex items-center gap-2 text-[12px] text-[#5A6B7C] mb-3">
                     <Calendar size={13} />
                     {item.date}
                   </div>
-                  <h3 className="text-lg sm:text-xl font-semibold text-[#0A1628] group-hover:text-[#1E3A5F] transition-colors duration-300 line-clamp-2">
+                  <h3 className="text-lg sm:text-xl font-semibold text-[#000000] group-hover:text-[#EC6707] transition-colors duration-300 line-clamp-2">
                     {isMn ? item.titleMn : item.titleEn}
                   </h3>
                 </Link>

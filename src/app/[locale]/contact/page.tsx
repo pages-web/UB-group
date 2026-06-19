@@ -21,15 +21,15 @@ export default function ContactPage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative w-full pt-40 pb-28 bg-[#0F172A]">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0F172A]/50 to-[#0F172A]" />
+      <section className="relative w-full pt-40 pb-28 bg-[#000000]">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/50 to-[#000000]" />
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="text-[11px] font-semibold tracking-[0.25em] text-[#C9A227] uppercase mb-6 block">
+            <span className="text-[11px] font-semibold tracking-[0.25em] text-[#EC6707] uppercase mb-6 block">
               Холбоо барих
             </span>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-tight">
@@ -47,7 +47,7 @@ export default function ContactPage() {
             <Reveal>
               <div className="bg-[#F0F4F8] border border-[#E2E8F0] rounded-2xl p-5 lg:p-4 shadow-sm">
                 <div>
-                  <span className="text-[11px] font-semibold tracking-[0.2em] text-[#1E3A5F] uppercase mb-5 block">
+                  <span className="text-[11px] font-semibold tracking-[0.2em] text-[#EC6707] uppercase mb-5 block">
                     Холбоо барих мэдээлэл
                   </span>
                   <p className="text-[15px] text-[#334155] leading-relaxed mb-5">
@@ -58,49 +58,49 @@ export default function ContactPage() {
                 <div className="space-y-8">
                   <div className="flex items-start gap-5 p-4 rounded-xl hover:bg-[#E8EEF4] transition-colors duration-300">
                     <div className="w-12 h-12 rounded-xl bg-[#F5F3ED] flex items-center justify-center shrink-0">
-                      <Mail className="w-5 h-5 text-[#1E3A5F]" strokeWidth={1.5} />
+                      <Mail className="w-5 h-5 text-[#EC6707]" strokeWidth={1.5} />
                     </div>
                     <div>
                       <p className="text-[11px] text-[#64748B] tracking-wider uppercase mb-2">
                         Имэйл
                       </p>
-                      <p className="text-[#0F172A] text-[15px]">info@ubgroup.mn</p>
+                      <p className="text-[#000000] text-[15px]">info@ubgroup.mn</p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-5 p-4 rounded-xl hover:bg-[#E8EEF4] transition-colors duration-300">
                     <div className="w-12 h-12 rounded-xl bg-[#F5F3ED] flex items-center justify-center shrink-0">
-                      <Phone className="w-5 h-5 text-[#1E3A5F]" strokeWidth={1.5} />
+                      <Phone className="w-5 h-5 text-[#EC6707]" strokeWidth={1.5} />
                     </div>
                     <div>
                       <p className="text-[11px] text-[#64748B] tracking-wider uppercase mb-2">
                         Утас
                       </p>
-                      <p className="text-[#0F172A] text-[15px]">+976 11 433995</p>
+                      <p className="text-[#000000] text-[15px]">+976 11 433995</p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-5 p-4 rounded-xl hover:bg-[#E8EEF4] transition-colors duration-300">
                     <div className="w-12 h-12 rounded-xl bg-[#F5F3ED] flex items-center justify-center shrink-0">
-                      <MapPin className="w-5 h-5 text-[#1E3A5F]" strokeWidth={1.5} />
+                      <MapPin className="w-5 h-5 text-[#EC6707]" strokeWidth={1.5} />
                     </div>
                     <div>
                       <p className="text-[11px] text-[#64748B] tracking-wider uppercase mb-2">
                         Хаяг
                       </p>
-                      <p className="text-[#0F172A] text-[15px]">Улаанбаатар, Монгол</p>
+                      <p className="text-[#000000] text-[15px]">Улаанбаатар, Монгол</p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-5 p-4 rounded-xl hover:bg-[#E8EEF4] transition-colors duration-300">
                     <div className="w-12 h-12 rounded-xl bg-[#F5F3ED] flex items-center justify-center shrink-0">
-                      <Clock className="w-5 h-5 text-[#1E3A5F]" strokeWidth={1.5} />
+                      <Clock className="w-5 h-5 text-[#EC6707]" strokeWidth={1.5} />
                     </div>
                     <div>
                       <p className="text-[11px] text-[#64748B] tracking-wider uppercase mb-2">
                         Ажлын цаг
                       </p>
-                      <p className="text-[#0F172A] text-[15px]">Да-Ба 09:00 - 18:00</p>
+                      <p className="text-[#000000] text-[15px]">Да-Ба 09:00 - 18:00</p>
                     </div>
                   </div>
                 </div>
@@ -118,7 +118,7 @@ export default function ContactPage() {
                     <input
                       type="text"
                       placeholder="Таны нэр"
-                      className="w-full px-5 py-4 bg-[#F0F4F8] border border-[#E2E8F0] text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:border-[#1E3A5F] focus:ring-1 focus:ring-[#1E3A5F] transition-all rounded-lg text-[15px]"
+                      className="w-full px-5 py-4 bg-[#F0F4F8] border border-[#E2E8F0] text-[#000000] placeholder-[#94A3B8] focus:outline-none focus:border-[#EC6707] focus:ring-1 focus:ring-[#EC6707] transition-all rounded-lg text-[15px]"
                     />
                   </div>
                   <div>
@@ -128,7 +128,7 @@ export default function ContactPage() {
                     <input
                       type="email"
                       placeholder="Имэйл хаяг"
-                      className="w-full px-5 py-4 bg-[#F0F4F8] border border-[#E2E8F0] text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:border-[#1E3A5F] focus:ring-1 focus:ring-[#1E3A5F] transition-all rounded-lg text-[15px]"
+                      className="w-full px-5 py-4 bg-[#F0F4F8] border border-[#E2E8F0] text-[#000000] placeholder-[#94A3B8] focus:outline-none focus:border-[#EC6707] focus:ring-1 focus:ring-[#EC6707] transition-all rounded-lg text-[15px]"
                     />
                   </div>
                 </div>
@@ -141,7 +141,7 @@ export default function ContactPage() {
                     <input
                       type="tel"
                       placeholder="Утасны дугаар"
-                      className="w-full px-5 py-4 bg-[#F0F4F8] border border-[#E2E8F0] text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:border-[#1E3A5F] focus:ring-1 focus:ring-[#1E3A5F] transition-all rounded-lg text-[15px]"
+                      className="w-full px-5 py-4 bg-[#F0F4F8] border border-[#E2E8F0] text-[#000000] placeholder-[#94A3B8] focus:outline-none focus:border-[#EC6707] focus:ring-1 focus:ring-[#EC6707] transition-all rounded-lg text-[15px]"
                     />
                   </div>
                   <div>
@@ -151,7 +151,7 @@ export default function ContactPage() {
                     <input
                       type="text"
                       placeholder="Гарчиг"
-                      className="w-full px-5 py-4 bg-[#F0F4F8] border border-[#E2E8F0] text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:border-[#1E3A5F] focus:ring-1 focus:ring-[#1E3A5F] transition-all rounded-lg text-[15px]"
+                      className="w-full px-5 py-4 bg-[#F0F4F8] border border-[#E2E8F0] text-[#000000] placeholder-[#94A3B8] focus:outline-none focus:border-[#EC6707] focus:ring-1 focus:ring-[#EC6707] transition-all rounded-lg text-[15px]"
                     />
                   </div>
                 </div>
@@ -163,13 +163,13 @@ export default function ContactPage() {
                   <textarea
                     rows={6}
                     placeholder="Таны зурвас"
-                    className="w-full px-5 py-4 bg-[#F0F4F8] border border-[#E2E8F0] text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:border-[#1E3A5F] focus:ring-1 focus:ring-[#1E3A5F] transition-all resize-none rounded-lg text-[15px]"
+                    className="w-full px-5 py-4 bg-[#F0F4F8] border border-[#E2E8F0] text-[#000000] placeholder-[#94A3B8] focus:outline-none focus:border-[#EC6707] focus:ring-1 focus:ring-[#EC6707] transition-all resize-none rounded-lg text-[15px]"
                   ></textarea>
                 </div>
 
                 <button
                   type="submit"
-                  className="group inline-flex items-center gap-3 px-10 py-5 bg-[#1E3A5F] text-white text-sm font-semibold tracking-wide hover:bg-[#152A45] transition-all duration-500 rounded-sm"
+                  className="group inline-flex items-center gap-3 px-10 py-5 bg-[#EC6707] text-white text-sm font-semibold tracking-wide hover:bg-[#B35405] transition-all duration-500 rounded-sm"
                 >
                   Илгээх
                   <Send size={16} className="group-hover:translate-x-1 transition-transform" />
