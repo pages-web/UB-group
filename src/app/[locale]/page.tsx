@@ -127,9 +127,9 @@ function HeroSlider({ locale }: { locale: string }) {
   const slide = heroSlides[current];
 
   return (
-    <section className="w-full bg-[#000000]">
+    <section className="w-full bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 lg:pt-32 pb-6 sm:pb-8">
-        <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] md:aspect-[2.4/1] max-h-[75vh] overflow-hidden rounded-3xl sm:rounded-[40px] bg-[#000000]">
+        <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] md:aspect-[2.4/1] max-h-[75vh] overflow-hidden rounded-3xl sm:rounded-[40px] bg-[#000000] shadow-xl">
           <AnimatePresence mode="wait">
             <motion.div
               key={slide.id}
