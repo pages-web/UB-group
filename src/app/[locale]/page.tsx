@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowRight, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "@/components/common/Image";
 
 const heroSlides = [
   {
@@ -70,14 +71,14 @@ const heroSlides = [
 ];
 
 const companies = [
-  { id: 1, name: "UB Properties", nameMn: "UB Properties" },
-  { id: 2, name: "UB Construction", nameMn: "UB Construction" },
-  { id: 3, name: "UB Logistics", nameMn: "UB Logistics" },
-  { id: 4, name: "UB Finance", nameMn: "UB Finance" },
-  { id: 5, name: "UB Energy", nameMn: "UB Energy" },
-  { id: 6, name: "UB Hospitality", nameMn: "UB Hospitality" },
-  { id: 7, name: "UB Mining", nameMn: "UB Mining" },
-  { id: 8, name: "UB Trading", nameMn: "UB Trading" },
+  { id: 1, name: "UB Coffee", nameMn: "UB Coffee", image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&q=80" },
+  { id: 2, name: "Centric", nameMn: "Centric", image: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=400&q=80" },
+  { id: 3, name: "itrip", nameMn: "itrip", image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=400&q=80" },
+  { id: 4, name: "Magic Tech", nameMn: "Мэйжик Тек", image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=80" },
+  { id: 5, name: "Sky Garden", nameMn: "Sky Garden", image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&q=80" },
+  { id: 6, name: "Palm Springs", nameMn: "Palm Springs", image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400&q=80" },
+  { id: 7, name: "Sky Park", nameMn: "Sky Park", image: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&q=80" },
+  { id: 8, name: "Tino", nameMn: "Tino", image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=80" },
 ];
 
 const latestNews = [
@@ -213,25 +214,28 @@ function MarqueeLogos({ locale }: { locale: string }) {
   const items = [...companies, ...companies];
 
   return (
-    <div className="w-full overflow-hidden py-4">
-      <div className="marquee-track-fast">
-        {items.map((company, index) => (
-          <div
-            key={`${company.id}-${index}`}
-            className="flex-shrink-0 w-[180px] sm:w-[220px] h-[100px] sm:h-[120px] mx-4 flex items-center justify-center bg-white rounded-lg border border-[#E2E8F0] shadow-sm hover:shadow-md transition-shadow"
-          >
-            <div className="text-center px-4">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 rounded-full bg-[#EC6707]/10 flex items-center justify-center">
-                <span className="text-[#EC6707] font-bold text-sm sm:text-base">
-                  {company.name.charAt(0)}
-                </span>
+    <div className="w-full overflow-hidden">
+      <div className="mx-auto max-w-[1600px] px-6 lg:px-8">
+        <div className="relative w-full bg-[#F0F0F3] rounded-full py-8 sm:py-10 overflow-hidden">
+          <div className="marquee-track-fast flex items-center">
+            {items.map((company, index) => (
+              <div
+                key={`${company.id}-${index}`}
+                className="flex-shrink-0 flex items-center justify-center px-10 sm:px-14 lg:px-16"
+              >
+                <div className="flex items-center justify-center h-14 sm:h-16 lg:h-18">
+                  <Image
+                    src={company.image}
+                    alt={locale === "mn" ? company.nameMn : company.name}
+                    width={160}
+                    height={64}
+                    className="h-full w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
+                  />
+                </div>
               </div>
-              <p className="text-xs sm:text-sm font-medium text-[#1E293B]">
-                {locale === "mn" ? company.nameMn : company.name}
-              </p>
-            </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );
@@ -262,20 +266,12 @@ export default function HomePage() {
       <HeroSlider locale={locale} />
 
       {/* SECTION 2 — COMPANIES LOGO MARQUEE */}
-      <section className="w-full py-20 sm:py-24 bg-[#F5F7FA]">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8 mb-10 sm:mb-12">
-          <Reveal className="text-center max-w-2xl mx-auto">
-            <span className="text-[11px] font-semibold tracking-[0.25em] text-[#EC6707] uppercase mb-4 block">
-              {isMn ? "Компаниуд" : "Companies"}
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#000000] tracking-tight mb-4">
-              {isMn ? "Компаниуд болон охин компаниуд" : "Companies & Subsidiaries"}
+      <section className="w-full py-20 sm:py-24 bg-white">
+        <div className="mx-auto max-w-[1600px] px-6 lg:px-8 mb-10 sm:mb-12">
+          <Reveal>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#000000] tracking-tight">
+              {isMn ? "Компаниуд" : "Companies & Subsidiaries"}
             </h2>
-            <p className="text-[#5A6B7C]">
-              {isMn
-                ? "UB Group-ийн бүрэлдэхүүн компаниуд олон салбарт үйл ажиллагаа явуулж байна."
-                : "UB Group's subsidiaries operate across multiple sectors."}
-            </p>
           </Reveal>
         </div>
         <MarqueeLogos locale={locale} />
