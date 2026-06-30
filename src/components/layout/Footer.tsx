@@ -50,15 +50,15 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="w-full bg-[#EC6707]">
+    <footer className="w-full bg-[#F5DEB3]">
       <div className="mx-auto max-w-7xl px-6 lg:px-8 py-14 lg:py-18">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Logo */}
           <div className="flex flex-col items-start">
-            <Link href={`/${locale}`} className="text-2xl font-bold tracking-[0.12em] text-white mb-4">
+            <Link href={`/${locale}`} className="text-2xl font-bold tracking-[0.12em] text-[#000000] mb-4">
               UB GROUP
             </Link>
-            <p className="text-sm text-white/70 leading-relaxed">
+            <p className="text-sm text-[#000000]/70 leading-relaxed">
               {isMn
                 ? "2006 оноос хойш Монгол Улсын ирээдүйг бүтээж байна."
                 : "Building Mongolia's future since 2006."}
@@ -67,10 +67,10 @@ export default function Footer() {
 
           {/* Address */}
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4 tracking-wide">
+            <h4 className="text-sm font-semibold text-[#000000] mb-4 tracking-wide">
               {isMn ? "Хаяг:" : "Address:"}
             </h4>
-            <p className="text-sm text-white/70 leading-relaxed">
+            <p className="text-sm text-[#000000]/70 leading-relaxed">
               {isMn ? (
                 <>
                   Монгол улс, Улаанбаатар хот,
@@ -95,10 +95,10 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4 tracking-wide">
+            <h4 className="text-sm font-semibold text-[#000000] mb-4 tracking-wide">
               {isMn ? "Холбоо барих:" : "Contact:"}
             </h4>
-            <div className="space-y-2 text-sm text-white/70">
+            <div className="space-y-2 text-sm text-[#000000]/70">
               <p>{isMn ? "Утас:" : "Phone:"} +976 7555-7775</p>
               <p>Email: info@ubgroup.mn</p>
             </div>
@@ -106,7 +106,7 @@ export default function Footer() {
 
           {/* Social */}
           <div>
-            <h4 className="text-sm font-semibold text-white mb-4 tracking-wide">
+            <h4 className="text-sm font-semibold text-[#000000] mb-4 tracking-wide">
               {isMn ? "Сошиал сүлжээ:" : "Social Media:"}
             </h4>
             <div className="flex items-center gap-3">
@@ -119,7 +119,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-[#EC6707] transition-all duration-300"
+                    className="w-10 h-10 bg-[#000000]/10 rounded-full flex items-center justify-center text-[#000000] hover:bg-[#000000] hover:text-[#F5DEB3] transition-all duration-300"
                   >
                     <Icon size={18} />
                   </a>
@@ -131,9 +131,9 @@ export default function Footer() {
       </div>
 
       {/* Copyright */}
-      <div className="border-t border-white/10">
+      <div className="border-t border-[#000000]/10">
         <div className="mx-auto max-w-7xl px-6 lg:px-8 py-5">
-          <p className="text-center text-sm text-white/50">
+          <p className="text-center text-sm text-[#000000]/50">
             {isMn
               ? "© 2024 Улаанбаатар Групп ХХК. Бүх эрх хуулиар хамгаалагдсан."
               : "© 2024 Ulaanbaatar Group LLC. All rights reserved."}
