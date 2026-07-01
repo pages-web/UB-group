@@ -51,7 +51,7 @@ export default function Footer() {
 
   return (
     <footer className="w-full bg-[#EC6707]">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-10 lg:py-12">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-6 lg:py-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Logo */}
           <div className="flex flex-col items-start">
