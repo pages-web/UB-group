@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import Image from "next/image";
 
 const navItems = [
   { label: "Нүүр", href: "/" },
@@ -52,14 +53,14 @@ export default function Header() {
           <div className="flex h-[72px] items-center justify-between">
             {/* Logo */}
             <Link href={`/${locale}`} className="flex items-center gap-3 group">
-              <div className="flex flex-col">
-                <span className={`text-xl font-bold tracking-[0.15em] transition-colors duration-300 ${
-                  scrolled ? "text-[#EC6707]" : "text-[#000000]"
-                }`}
-                >
-                  UB GROUP
-                </span>
-              </div>
+              <Image
+                src="/ub-logo.png"
+                alt="UB Group"
+                width={140}
+                height={40}
+                className="h-10 w-auto object-contain"
+                priority
+              />
             </Link>
 
             {/* Desktop Navigation */}
