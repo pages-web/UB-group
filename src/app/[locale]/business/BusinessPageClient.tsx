@@ -55,21 +55,12 @@ export default function BusinessPageClient({ locale, sectors }: BusinessPageClie
                       transition={{ duration: 0.5, delay: index * 0.05 }}
                       className="relative z-10 w-full min-h-[260px] rounded-3xl border border-white/10 bg-white/10 p-5 text-center hover:bg-white/20 hover:border-white/20 transition-colors"
                     >
-                      <div className="flex justify-center mb-3">
-                        <Image
-                          src="/ub-logo-white.png"
-                          alt="UB"
-                          width={48}
-                          height={16}
-                          className="h-4 w-auto object-contain opacity-90"
-                        />
+                      <div className="text-white text-xs font-bold tracking-[0.2em] mb-3">
+                        UB
                       </div>
-                      <div className="text-white text-base lg:text-lg font-bold tracking-wide mb-3">
+                      <div className="text-white text-base lg:text-lg font-bold tracking-wide">
                         {isMn ? sector.nameMn : sector.nameEn}
                       </div>
-                      <p className="text-white/80 text-sm leading-relaxed">
-                        {isMn ? sector.summaryMn : sector.summaryEn}
-                      </p>
                     </motion.div>
                   </div>
                 ))}
