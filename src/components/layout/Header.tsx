@@ -6,61 +6,82 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { useCmsPostsBySlug } from "@/hooks/useCmsPostsBySlug";
 
-const navItems = [
-  { label: "Нүүр", href: "/" },
+const businessCategorySlug = "biznesiin-chiglel";
+
+const baseNavItems = [
+  { labelKey: "home", href: "/" },
   {
-    label: "Бидний тухай",
+    labelKey: "about",
     href: "/about",
     children: [
-      { label: "Компанийн танилцуулга", href: "/about" },
-      { label: "Алсын хараа, эрхэм зорилго", href: "/about#vision" },
-      { label: "Компанийн түүх", href: "/about#history" },
-      { label: "Удирдлагын баг", href: "/about#team" },
+      { labelKey: "companyIntro", href: "/about" },
+      { labelKey: "visionMission", href: "/about#vision" },
+      { labelKey: "companyHistory", href: "/about#history" },
+      { labelKey: "leadershipTeam", href: "/about#team" },
     ],
   },
   {
-    label: "Бизнес",
+    labelKey: "business",
     href: "/business",
-    children: [
-      { label: "Барилгын төслүүд", href: "/business/construction" },
-      { label: "Санхүү, хөрөнгө оруулалт", href: "/business/investment" },
-      { label: "Тээвэр, логистик", href: "/business/logistics" },
-      { label: "Лайфстайл, үйлчилгээ", href: "/business/lifestyle" },
-      { label: "Менежмент", href: "/business/management" },
-    ],
+    children: [],
   },
-  { label: "Тогтвортой хөгжил", href: "/sustainability" },
+  { labelKey: "sustainability", href: "/sustainability" },
   {
-    label: "Мэдээ мэдээлэл",
+    labelKey: "news",
     href: "/news",
     children: [
-      { label: "Бүгд", href: "/news" },
-      { label: "Барилгын төслүүд", href: "/news?category=Барилгын төслүүд" },
-      { label: "Санхүү, хөрөнгө оруулалт", href: "/news?category=Санхүү, хөрөнгө оруулалт" },
-      { label: "Тээвэр", href: "/news?category=Тээвэр" },
-      { label: "Лайфстайл", href: "/news?category=Лайфстайл" },
-      { label: "Менежмент", href: "/news?category=Менежмент" },
+      { labelKey: "all", href: "/news" },
+      { labelKey: "constructionProjects", href: "/news?category=construction" },
+      { labelKey: "financeInvestment", href: "/news?category=finance" },
+      { labelKey: "transport", href: "/news?category=transport" },
+      { labelKey: "lifestyle", href: "/news?category=lifestyle" },
+      { labelKey: "management", href: "/news?category=management" },
     ],
   },
   {
-    label: "Карьер ба хамтын ажиллагаа",
+    labelKey: "career",
     href: "/career",
     children: [
-      { label: "Нээлттэй ажлын байр", href: "/career#jobs" },
-      { label: "Тендерүүд", href: "/career#tenders" },
-      { label: "Анкет илгээх", href: "/career#application" },
+      { labelKey: "openJobs", href: "/career#jobs" },
+      { labelKey: "tenders", href: "/career#tenders" },
+      { labelKey: "submitApplication", href: "/career#application" },
     ],
   },
 ];
 
 export default function Header() {
+  const t = useTranslations("nav");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const locale = pathname.split("/")[1] || "mn";
   const pathWithoutLocale = pathname.replace(new RegExp(`^/${locale}`), "") || "/";
+  const { posts: businessPosts } = useCmsPostsBySlug(businessCategorySlug);
+  const navItems = baseNavItems.map((item) =>
+    item.href === "/business"
+      ? {
+          ...item,
+          label: t(item.labelKey),
+          children: businessPosts
+            .filter((post) => post.slug)
+            .map((post) => ({
+              label: post.title,
+              href: `/business/${post.slug}`,
+            })),
+        }
+      : {
+          ...item,
+          label: t(item.labelKey),
+          children: item.children?.map((child) => ({
+            label: t(child.labelKey),
+            href: child.href,
+          })),
+        },
+  );
 
   useEffect(() => {
     const handleScroll = () => {

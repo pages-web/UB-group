@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { useTranslations } from "next-intl";
 
 export type PageInfo = {
   cursor?: string | null;
@@ -32,6 +33,7 @@ export default function Pagination({
   onCursorChange,
   className,
 }: PaginationProps) {
+  const t = useTranslations("common");
   // cursorHistory[i] is the cursor needed to reach page i+1.
   // cursorHistory[0] is always null (page 1 needs no cursor).
   const [cursorHistory, setCursorHistory] = useState<(string | null)[]>([null]);
@@ -85,26 +87,26 @@ export default function Pagination({
 
   return (
     <nav
-      aria-label="Pagination"
+      aria-label={t("pagination")}
       className={`flex flex-col items-center gap-4 sm:flex-row sm:justify-between ${className ?? ""}`}
     >
       <p className="text-sm text-zinc-500 dark:text-zinc-400">
-        Showing{" "}
+        {t("showing")}{" "}
         <span className="font-medium text-zinc-900 dark:text-zinc-100">
           {start}–{end}
         </span>{" "}
-        of{" "}
+        {t("of")}{" "}
         <span className="font-medium text-zinc-900 dark:text-zinc-100">
           {totalCount}
         </span>{" "}
-        results
+        {t("results")}
       </p>
 
       <div className="flex items-center gap-1">
         <PageButton
           onClick={handlePrev}
           disabled={!hasPrev}
-          aria-label="Previous page"
+          aria-label={t("previousPage")}
         >
           <svg
             className="h-4 w-4"
@@ -131,7 +133,7 @@ export default function Pagination({
               onClick={() => handlePage(page)}
               active={page === currentPage}
               disabled={page !== currentPage && cursorHistory[page - 1] === undefined}
-              aria-label={`Page ${page}`}
+              aria-label={`${t("page")} ${page}`}
               aria-current={page === currentPage ? "page" : undefined}
             >
               {page}
@@ -142,7 +144,7 @@ export default function Pagination({
         <PageButton
           onClick={handleNext}
           disabled={!hasNext}
-          aria-label="Next page"
+          aria-label={t("nextPage")}
         >
           <svg
             className="h-4 w-4"

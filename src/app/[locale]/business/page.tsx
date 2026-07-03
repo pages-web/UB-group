@@ -1,4 +1,3 @@
-import { sectors } from "@/lib/business-data";
 import BusinessPageClient from "./BusinessPageClient";
 
 export default async function BusinessPage({
@@ -8,5 +7,5 @@ export default async function BusinessPage({
 }) {
   const { locale } = await params;
 
-  return <BusinessPageClient locale={locale} sectors={sectors} />;
+  return <BusinessPageClient locale={locale} />;
 }

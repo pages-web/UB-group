@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 type LoaderProps = {
   size?: "sm" | "md" | "lg";
   className?: string;
@@ -10,10 +12,12 @@ const sizeClasses = {
 };
 
 export default function Loader({ size = "md", className }: LoaderProps) {
+  const t = useTranslations("common");
+
   return (
     <div
       role="status"
-      aria-label="Loading"
+      aria-label={t("loading")}
       className={`inline-block animate-spin rounded-full border-zinc-200 border-t-zinc-900 dark:border-zinc-700 dark:border-t-zinc-100 ${sizeClasses[size]} ${className ?? ""}`}
     />
   );

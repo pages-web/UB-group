@@ -1,14 +1,21 @@
-import { notFound } from 'next/navigation';
-import { sectors, getSectorById } from '@/lib/business-data';
-import SectorProjectsClient from './SectorProjectsClient';
+import SectorProjectsClient from "./SectorProjectsClient";
+
+const sectorSlugs = [
+  "barilgyn-tusluud",
+  "sankhuu-khurungu-oruulalt",
+  "teever-logistik",
+  "laifstail-uilchilgee",
+  "menejment",
+];
 
 export function generateStaticParams() {
-  const locales = ['mn', 'en'];
+  const locales = ["mn", "en"];
+
   return locales.flatMap((locale) =>
-    sectors.map((sector) => ({
+    sectorSlugs.map((sector) => ({
       locale,
-      sector: sector.id,
-    }))
+      sector,
+    })),
   );
 }
 
@@ -18,11 +25,6 @@ export default async function SectorPage({
   params: Promise<{ locale: string; sector: string }>;
 }) {
   const { locale, sector } = await params;
-  const data = getSectorById(sector);
 
-  if (!data) {
-    notFound();
-  }
-
-  return <SectorProjectsClient sector={data} locale={locale} />;
+  return <SectorProjectsClient sectorSlug={sector} locale={locale} />;
 }

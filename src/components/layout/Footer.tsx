@@ -3,7 +3,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Globe } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useContactInfo } from "@/hooks/useContactInfo";
+
+const getLink = (url?: string) =>
+  url?.startsWith("http") ? url : url ? `https://${url}` : "#";
 
 // Inline social icon components because lucide-react v1 does not include brand icons.
 function FacebookIcon({ size = 18 }: { size?: number }) {
@@ -39,15 +43,17 @@ function LinkedinIcon({ size = 18 }: { size?: number }) {
 }
 
 export default function Footer() {
+  const t = useTranslations("footer");
   const pathname = usePathname();
   const locale = pathname.split("/")[1] || "mn";
-  const isMn = locale === "mn";
+  const commonT = useTranslations("common");
+  const { contactInfo } = useContactInfo();
 
   const socialLinks = [
-    { icon: FacebookIcon, href: "https://facebook.com", label: "Facebook" },
-    { icon: InstagramIcon, href: "https://instagram.com", label: "Instagram" },
-    { icon: YoutubeIcon, href: "https://youtube.com", label: "YouTube" },
-    { icon: LinkedinIcon, href: "https://linkedin.com", label: "LinkedIn" },
+    { icon: FacebookIcon, href: getLink(contactInfo?.facebook), label: "Facebook" },
+    { icon: InstagramIcon, href: getLink(contactInfo?.instagram), label: "Instagram" },
+    { icon: YoutubeIcon, href: getLink(contactInfo?.youtube), label: "YouTube" },
+    { icon: LinkedinIcon, href: getLink(contactInfo?.linkedin), label: "LinkedIn" },
   ];
 
   return (
@@ -67,55 +73,35 @@ export default function Footer() {
               />
             </Link>
             <p className="text-sm text-white/70 leading-relaxed">
-              {isMn
-                ? "2006 оноос хойш Монгол Улсын ирээдүйг бүтээж байна."
-                : "Building Mongolia's future since 2006."}
+              {t("tagline")}
             </p>
           </div>
 
           {/* Address */}
           <div>
             <h4 className="text-sm font-semibold text-white mb-4 tracking-wide">
-              {isMn ? "Хаяг:" : "Address:"}
+              {t("address")}
             </h4>
             <p className="text-sm text-white/70 leading-relaxed">
-              {isMn ? (
-                <>
-                  Монгол улс, Улаанбаатар хот,
-                  <br />
-                  Сүхбаатар дүүрэг, 1-р хороо,
-                  <br />
-                  Эрүүл мэндийн яамны баруун талд
-                  <br />
-                  ITC International Trade Center.
-                </>
-              ) : (
-                <>
-                  ITC International Trade Center,
-                  <br />
-                  Sukhbaatar District, 1st khoroo,
-                  <br />
-                  Ulaanbaatar, Mongolia.
-                </>
-              )}
+              {contactInfo?.location || commonT("noData")}
             </p>
           </div>
 
           {/* Contact */}
           <div>
             <h4 className="text-sm font-semibold text-white mb-4 tracking-wide">
-              {isMn ? "Холбоо барих:" : "Contact:"}
+              {t("contact")}
             </h4>
             <div className="space-y-2 text-sm text-white/70">
-              <p>{isMn ? "Утас:" : "Phone:"} +976 7555-7775</p>
-              <p>Email: info@ubgroup.mn</p>
+              <p>{t("phone")} {contactInfo?.phone || commonT("noData")}</p>
+              <p>Email: {contactInfo?.email || commonT("noData")}</p>
             </div>
           </div>
 
           {/* Social */}
           <div>
             <h4 className="text-sm font-semibold text-white mb-4 tracking-wide">
-              {isMn ? "Сошиал сүлжээ:" : "Social Media:"}
+              {t("social")}
             </h4>
             <div className="flex items-center gap-3">
               {socialLinks.map((social) => {
@@ -142,9 +128,7 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="mx-auto max-w-7xl px-6 lg:px-8 py-5">
           <p className="text-center text-sm text-white/50">
-            {isMn
-              ? "© 2024 Улаанбаатар Групп ХХК. Бүх эрх хуулиар хамгаалагдсан."
-              : "© 2024 Ulaanbaatar Group LLC. All rights reserved."}
+            {t("rights")}
           </p>
         </div>
       </div>

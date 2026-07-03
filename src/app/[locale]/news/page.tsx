@@ -5,6 +5,11 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowRight, Calendar, ChevronDown } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { CmsContent } from "@/components/common/CmsContent";
+import { useCmsPostsBySlug } from "@/hooks/useCmsPostsBySlug";
+import { usePageBySlug } from "@/hooks/usePageBySlug";
+import { CmsPost } from "@/types/cmsPostType";
 
 function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
   return (
@@ -20,146 +25,47 @@ function Reveal({ children, delay = 0, className = "" }: { children: React.React
   );
 }
 
-const news = [
-  {
-    id: "vision-business-tower-progress",
-    title: "Vision Business Tower-ийн бүтээн байгуулалт өрнөж байна",
-    date: "2024.12.15",
-    excerpt: "Улаанбаатар хотод шинэ оффис, орон сууцны төсөл өрнөж байна. Энэхүү төсөл нь олон улсын стандартад нийцсэн А зэрэглэлийн барилга юм.",
-    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80",
-    category: "Барилга",
-  },
-  {
-    id: "sustainability-report-2024",
-    title: "Тогтвортой хөгжлийн тайлан 2024",
-    date: "2024.11.28",
-    excerpt: "2024 оны тогтвортой хөгжлийн тайлангаа танилцууллаа. Байгаль орчны нөлөөллийг 30% бууруулсан.",
-    image: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=800&q=80",
-    category: "Тогтвортой хөгжил",
-  },
-  {
-    id: "ub-group-best-project-company",
-    title: "Шилдэг төсөл хэрэгжүүлэгч компани",
-    date: "2024.11.10",
-    excerpt: "Barilga EXPO 2024 олон улсын үзэсгэлэн яармагт шилдэг төсөл хэрэгжүүлэгч компаниар шалгарлаа.",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
-    category: "Шагнал",
-  },
-  {
-    id: "international-partnership",
-    title: "Олон улсын хамтын ажиллагаа өргөжив",
-    date: "2024.10.25",
-    excerpt: "Олон улсын томоохон компаниудтай хамтын ажиллагаагаа өргөжүүллээ. Шинэ технологи нэвтрүүлэхээр боллоо.",
-    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
-    category: "Хамтын ажиллагаа",
-  },
-  {
-    id: "solar-station-operational",
-    title: "Нарны цахилгаан станц ашиглалтанд орлоо",
-    date: "2024.10.15",
-    excerpt: "Дундговь аймагт баригдсан 10МВт хүчин чадалтай нарны цахилгаан станц ашиглалтанд орлоо.",
-    image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80",
-    category: "Эрчим хүч",
-  },
-  {
-    id: "employee-awards",
-    title: "Ажилтнуудаа шагналаа",
-    date: "2024.09.30",
-    excerpt: "Оны шилдэг ажилтнуудаа шагналаа. Манай хамт олонгийн хөдөлмөрийг үнэлж, урамшуулж байна.",
-    image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80",
-    category: "Нийгмийн хариуцлага",
-  },
-  {
-    id: "central-park-ub",
-    title: "Central Park UB төслийг танилцууллаа",
-    date: "2024.09.15",
-    excerpt: "Хотын төвд ногоон байгууламж, орчин үеийн дизайн бүхий Central Park UB төслийг танилцууллаа.",
-    image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=800&q=80",
-    category: "Барилга",
-  },
-  {
-    id: "csr-tree-planting",
-    title: "Нийгмийн хариуцлагын хүрээнд мод тарилаа",
-    date: "2024.08.28",
-    excerpt: "Байгаль орчноо хамгаалах зорилгоор 1000 гаруй мод тарьж, ногоон байгууламж бий болголоо.",
-    image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80",
-    category: "Тогтвортой хөгжил",
-  },
-  {
-    id: "top-100-enterprise",
-    title: "Монгол Улсын ТОП-100 аж ахуйн нэгж",
-    date: "2024.08.10",
-    excerpt: "Монгол Улсын ТОП-100 аж ахуйн нэгжийн эхний эгнээнд багтлаа.",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80",
-    category: "Шагнал",
-  },
-  {
-    id: "logistics-fleet-expansion",
-    title: "Тээврийн парк шинэчлэлээ",
-    date: "2024.07.22",
-    excerpt: "Стандартын шаардлага хангасан шинэ тээврийн хэрэгслээр паркаа өргөтгөлөө.",
-    image: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=800&q=80",
-    category: "Хамтын ажиллагаа",
-  },
-  {
-    id: "yoshinoya-zaisan-opens",
-    title: "Yoshinoya Зайсан салбар нээгдлээ",
-    date: "2024.06.30",
-    excerpt: "Yoshinoya олон улсын эрүүл түргэн хоолны сүлжээний Зайсан салбар нээгдлээ.",
-    image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80",
-    category: "Нийгмийн хариуцлага",
-  },
-  {
-    id: "renewable-energy-goals",
-    title: "Сэргээгдэх эрчим хүчний зорилтоо танилцууллаа",
-    date: "2024.06.12",
-    excerpt: "2030 он гэхэд эрчим хүчний хэрэглээний 50%-ийг сэргээгдэх эрчим хүчнээс хангах зорилт тавив.",
-    image: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800&q=80",
-    category: "Эрчим хүч",
-  },
-];
+const newsCategorySlug = "medee-medeelel";
 
-const categories = [
-  "Бүгд",
-  "Барилгын төслүүд",
-  "Санхүү, хөрөнгө оруулалт",
-  "Тээвэр",
-  "Лайфстайл",
-  "Менежмент",
-  "Бусад",
-];
-
-const CATEGORY_MAP: Record<string, string[]> = {
-  "Барилгын төслүүд": ["Барилга"],
-  "Санхүү, хөрөнгө оруулалт": ["Санхүү", "Хөрөнгө оруулалт", "Шагнал"],
-  "Тээвэр": ["Тээвэр", "Логистик", "Эрчим хүч"],
-  "Лайфстайл": ["Лайфстайл", "Хамтын ажиллагаа", "Нийгмийн хариуцлага"],
-  "Менежмент": ["Менежмент"],
-  "Бусад": [],
+const getPostImage = (post: CmsPost) => post.thumbnail?.url || post.images?.[0]?.url || "";
+const getNewsType = (post: CmsPost) => {
+  const news = post.customFieldsMap?.news as { type?: string[] } | undefined;
+  return Array.isArray(news?.type) ? news.type[0] : "";
 };
+
+const formatDate = (date: string, locale: string) =>
+  new Date(date).toLocaleDateString(locale === "mn" ? "mn-MN" : "en-US", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
 
 const INITIAL_ROWS = 2;
 const CARDS_PER_ROW = 3;
 const INITIAL_COUNT = INITIAL_ROWS * CARDS_PER_ROW;
 
 export default function NewsPage() {
+  const t = useTranslations("news");
+  const commonT = useTranslations("common");
   const pathname = usePathname();
   const locale = pathname.split("/")[1] || "mn";
+  const noDataText = commonT("noData");
+  const allCategory = commonT("all");
+  const { page } = usePageBySlug("news");
+  const { posts: news } = useCmsPostsBySlug(newsCategorySlug);
 
-  const [activeCategory, setActiveCategory] = useState("Бүгд");
+  const [activeCategory, setActiveCategory] = useState(allCategory);
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
 
+  const categories = useMemo(() => {
+    const types = news.map(getNewsType).filter(Boolean);
+    return [allCategory, ...Array.from(new Set(types))];
+  }, [allCategory, news]);
+
   const filteredNews = useMemo(() => {
-    if (activeCategory === "Бүгд") return news;
-
-    const mappedCategories = CATEGORY_MAP[activeCategory] || [];
-    if (activeCategory === "Бусад") {
-      const allMapped = Object.values(CATEGORY_MAP).flat();
-      return news.filter((item) => !allMapped.includes(item.category));
-    }
-
-    return news.filter((item) => mappedCategories.includes(item.category));
-  }, [activeCategory]);
+    if (activeCategory === allCategory) return news;
+    return news.filter((item) => getNewsType(item) === activeCategory);
+  }, [activeCategory, allCategory, news]);
 
   const visibleNews = filteredNews.slice(0, visibleCount);
   const hasMore = visibleCount < filteredNews.length;
@@ -177,10 +83,12 @@ export default function NewsPage() {
     <>
       {/* HERO */}
       <section className="relative w-full pt-24 pb-16 overflow-hidden bg-[#000000]">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-30"
-          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1920&q=80')" }}
-        />
+        {page?.thumbnail?.url && (
+          <div
+            className="absolute inset-0 bg-cover bg-center opacity-30"
+            style={{ backgroundImage: `url('${page.thumbnail.url}')` }}
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/70 via-[#000000]/40 to-[#000000]" />
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8 text-center">
           <motion.div
@@ -188,12 +96,13 @@ export default function NewsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="text-[11px] font-semibold tracking-[0.25em] text-[#EC6707] uppercase mb-4 block">
-              МЭДЭЭ
-            </span>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5 tracking-tight">
-              Мэдээлэл
+              {page?.name || noDataText}
             </h1>
+            <CmsContent
+              html={page?.description || noDataText}
+              className="mx-auto max-w-xl text-lg text-white/70 [&_p]:text-lg [&_p]:text-white/70 [&_p]:leading-relaxed"
+            />
           </motion.div>
         </div>
       </section>
@@ -221,39 +130,47 @@ export default function NewsPage() {
           </Reveal>
 
           {/* GRID */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {visibleNews.map((item, index) => (
-              <Reveal key={item.id} delay={index * 0.08}>
-                <Link
-                  href={`/${locale}/news/${item.id}`}
-                  className="group relative block w-full aspect-[3/4] rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-700"
-                >
-                  <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                    style={{ backgroundImage: `url('${item.image}')` }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/90 via-[#000000]/30 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-6">
-                    <span className="inline-block px-3 py-1.5 mb-4 bg-[#EC6707]/90 backdrop-blur-sm text-white text-[11px] font-medium tracking-wider uppercase rounded-full">
-                      {item.category}
-                    </span>
-                    <div className="flex items-center gap-2 text-[11px] text-white/70 mb-3">
-                      <Calendar size={12} />
-                      {item.date}
+          {visibleNews.length ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {visibleNews.map((item, index) => (
+                <Reveal key={item._id} delay={index * 0.08}>
+                  <Link
+                    href={`/${locale}/news/${item.slug}`}
+                    className="group relative block w-full aspect-[3/4] rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-700"
+                  >
+                    {getPostImage(item) && (
+                      <div
+                        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                        style={{ backgroundImage: `url('${getPostImage(item)}')` }}
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/90 via-[#000000]/30 to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 p-6">
+                      <span className="inline-block px-3 py-1.5 mb-4 bg-[#EC6707]/90 backdrop-blur-sm text-white text-[11px] font-medium tracking-wider uppercase rounded-full">
+                        {getNewsType(item) || noDataText}
+                      </span>
+                      <div className="flex items-center gap-2 text-[11px] text-white/70 mb-3">
+                        <Calendar size={12} />
+                        {formatDate(item.createdAt, locale)}
+                      </div>
+                      <h3 className="text-lg font-bold text-white mb-3 leading-snug line-clamp-2 group-hover:text-[#EC6707] transition-colors duration-300">
+                        {item.title}
+                      </h3>
+                      <p className="text-sm text-white/80 line-clamp-2 mb-4">
+                        {item.excerpt || noDataText}
+                      </p>
+                      <div className="inline-flex items-center gap-1 text-[#EC6707] text-sm font-semibold">
+                        {t("readMore")}
+                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                      </div>
                     </div>
-                    <h3 className="text-lg font-bold text-white mb-3 leading-snug line-clamp-2 group-hover:text-[#EC6707] transition-colors duration-300">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm text-white/80 line-clamp-2 mb-4">{item.excerpt}</p>
-                    <div className="inline-flex items-center gap-1 text-[#EC6707] text-sm font-semibold">
-                      Дэлгэрэнгүй
-                      <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-sm text-[#64748B]">{noDataText}</p>
+          )}
 
           {/* LOAD MORE */}
           {hasMore && (
@@ -262,7 +179,7 @@ export default function NewsPage() {
                 onClick={handleLoadMore}
                 className="group inline-flex items-center gap-2 px-8 py-4 bg-white border border-[#E2E8F0] text-[#334155] text-sm font-semibold rounded-full hover:border-[#EC6707] hover:text-[#EC6707] transition-all duration-300 shadow-sm hover:shadow-md"
               >
-                Цааш үргэлжлүүлэх
+                {t("loadMore")}
                 <ChevronDown size={16} className="group-hover:translate-y-0.5 transition-transform" />
               </button>
             </Reveal>
