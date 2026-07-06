@@ -28,9 +28,9 @@ function Reveal({ children, delay = 0, className = "" }: { children: React.React
 const newsCategorySlug = "medee-medeelel";
 
 const getPostImage = (post: CmsPost) => post.thumbnail?.url || post.images?.[0]?.url || "";
-const getNewsType = (post: CmsPost) => {
+const getNewsCategories = (post: CmsPost) => {
   const news = post.customFieldsMap?.news as { type?: string[] } | undefined;
-  return Array.isArray(news?.type) ? news.type[0] : "";
+  return Array.isArray(news?.type) ? news.type.filter(Boolean) : [];
 };
 
 const formatDate = (date: string, locale: string) =>
@@ -58,13 +58,13 @@ export default function NewsPage() {
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
 
   const categories = useMemo(() => {
-    const types = news.map(getNewsType).filter(Boolean);
-    return [allCategory, ...Array.from(new Set(types))];
+    const customFieldCategories = news.flatMap(getNewsCategories);
+    return [allCategory, ...Array.from(new Set(customFieldCategories))];
   }, [allCategory, news]);
 
   const filteredNews = useMemo(() => {
     if (activeCategory === allCategory) return news;
-    return news.filter((item) => getNewsType(item) === activeCategory);
+    return news.filter((item) => getNewsCategories(item).includes(activeCategory));
   }, [activeCategory, allCategory, news]);
 
   const visibleNews = filteredNews.slice(0, visibleCount);
@@ -147,7 +147,7 @@ export default function NewsPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/90 via-[#000000]/30 to-transparent" />
                     <div className="absolute inset-x-0 bottom-0 p-6">
                       <span className="inline-block px-3 py-1.5 mb-4 bg-[#EC6707]/90 backdrop-blur-sm text-white text-[11px] font-medium tracking-wider uppercase rounded-full">
-                        {getNewsType(item) || noDataText}
+                        {getNewsCategories(item).join(", ") || noDataText}
                       </span>
                       <div className="flex items-center gap-2 text-[11px] text-white/70 mb-3">
                         <Calendar size={12} />

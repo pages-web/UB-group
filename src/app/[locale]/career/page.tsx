@@ -58,14 +58,15 @@ const jobsCategorySlug = "ajlyn-bairuud";
 const tendersCategorySlug = "tenderuud";
 const APPLICATION_FORM_CODE = "eVBVTM";
 const APPLICATION_CHANNEL_ID = "NacImkee_2sr0fDAf-Q85";
-const FALLBACK_APPLICATION_FORM_ID = "f";
+const FALLBACK_APPLICATION_FORM_ID = "yjpnLGmwtde7R8en6yINI";
 
 const APPLICATION_FIELD_IDS = {
-  name: "6ej4JfdmL5imwJYGRE17E",
-  phone: "lprjkKo740wDbP5cQrsid",
-  email: "d4pgY_PwwVdUK8dM9bS_6",
-  position: "HaIb7kDimqABaAsm-LL1P",
-  message: "ESrpHRwtouzpPyG5k_EUJ",
+  name: "UYBphOD2zyK7nPCi1khrb",
+  email: "ZtnBsEhMD-OxMdEHRVRAm",
+  phone: "67RCBmDiqTaelMdXueG8w",
+  position: "olMuGw1h2gY-JpEv3X1Zj",
+  message: "Kre8pvK7yY91J9PCCfrkw",
+  cv: "aWnKK7-L_Vdu5-sqIKdcO",
 } as const;
 
 const TENDER_CHANNEL_ID = "NacImkee_2sr0fDAf-Q85";
@@ -206,6 +207,8 @@ export default function CareerPage() {
   // ---- Job application form state / erxes wiring -------------------------
   const [appSent, setAppSent] = useState(false);
   const [appSubmitError, setAppSubmitError] = useState("");
+  const [appUploading, setAppUploading] = useState(false);
+  const [appFiles, setAppFiles] = useState<File[]>([]);
   const [appForm, setAppForm] = useState({
     name: "",
     email: "",
@@ -284,6 +287,44 @@ export default function CareerPage() {
 
   const handleTenderFilesChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTenderFiles(Array.from(event.target.files ?? []));
+  };
+
+  const handleAppFilesChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setAppFiles(Array.from(event.target.files ?? []));
+  };
+
+  const uploadAppFiles = async (): Promise<string[]> => {
+    if (!appFiles.length) return [];
+
+    const graphqlUrl =
+      process.env.NEXT_PUBLIC_GRAPHQL_URL ??
+      process.env.NEXT_PUBLIC_ERXES_ENDPOINT ??
+      "/graphql";
+    const uploadUrl = graphqlUrl.replace(/\/graphql$/, "/upload-file");
+    const appToken = process.env.NEXT_PUBLIC_ERXES_APP_TOKEN;
+    const urls: string[] = [];
+
+    for (const file of appFiles) {
+      const body = new FormData();
+      body.append("file", file);
+
+      const response = await fetch(
+        `${uploadUrl}?kind=main&maxHeight=0&maxWidth=0`,
+        {
+          method: "POST",
+          body,
+          credentials: "include",
+          headers: appToken ? { "x-app-token": appToken } : undefined,
+        },
+      );
+
+      if (!response.ok) throw new Error(t("uploadError"));
+
+      const url = await response.text();
+      if (url) urls.push(url);
+    }
+
+    return urls;
   };
 
   const uploadTenderFiles = async (): Promise<TicketAttachmentInput[]> => {
@@ -368,6 +409,10 @@ export default function CareerPage() {
     setAppSubmitError("");
 
     try {
+      setAppUploading(true);
+      const cvUrls = await uploadAppFiles();
+      setAppUploading(false);
+
       const result = await saveAppLead({
         variables: {
           formId: erxesAppForm?._id ?? FALLBACK_APPLICATION_FORM_ID,
@@ -398,6 +443,12 @@ export default function CareerPage() {
               appForm.message,
               "textarea",
             ),
+            createAppSubmission(
+              APPLICATION_FIELD_IDS.cv,
+              t("attachCv"),
+              cvUrls,
+              "file",
+            ),
           ],
           browserInfo: {
             url: window.location.pathname + window.location.search,
@@ -419,6 +470,7 @@ export default function CareerPage() {
 
       setAppSent(true);
     } catch {
+      setAppUploading(false);
       setAppSubmitError(t("applicationError"));
     }
   };
@@ -661,15 +713,20 @@ export default function CareerPage() {
                   <label className="text-sm text-[#64748B] mb-2 block">
                     {t("attachCv")}
                   </label>
-                  <div className="border-2 border-dashed border-[#E2E8F0] rounded-lg p-5 text-center hover:border-[#EC6707] transition-colors cursor-pointer">
+                  <label className="block border-2 border-dashed border-[#E2E8F0] rounded-lg p-5 text-center hover:border-[#EC6707] transition-colors cursor-pointer">
                     <Upload size={24} className="mx-auto mb-2 text-[#94A3B8]" />
                     <p className="text-sm text-[#64748B]">
-                      {t("uploadHint")}
+                      {appFiles.length
+                        ? appFiles.map((file) => file.name).join(", ")
+                        : t("uploadHint")}
                     </p>
-                  </div>
-                  {/* Note: file is not yet wired into the submission — erxes file
-                      uploads require a separate widgetsUploadFile mutation and
-                      attaching the returned URL to the submission payload. */}
+                    <input
+                      type="file"
+                      multiple
+                      className="hidden"
+                      onChange={handleAppFilesChange}
+                    />
+                  </label>
                 </div>
 
                 {appSubmitError && (
@@ -681,10 +738,10 @@ export default function CareerPage() {
 
                 <button
                   type="submit"
-                  disabled={appSaving}
+                  disabled={appSaving || appUploading}
                   className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-[#EC6707] text-white font-semibold rounded-lg hover:bg-[#B35405] transition-colors disabled:cursor-not-allowed disabled:opacity-70"
                 >
-                  {appSaving ? (
+                  {appSaving || appUploading ? (
                     <Loader2 size={18} className="animate-spin" />
                   ) : (
                     <Send size={18} />

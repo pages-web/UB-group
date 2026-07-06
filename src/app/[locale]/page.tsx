@@ -171,7 +171,7 @@ function MarqueeLogos({ companies }: { companies: CompanyItem[] }) {
                     alt={company.name}
                     width={160}
                     height={64}
-                    className="h-full w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
+                    className="h-full w-auto object-contain"
                   />
                 </div>
               </div>
