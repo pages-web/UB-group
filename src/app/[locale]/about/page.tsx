@@ -98,6 +98,7 @@ function ChairmanSection() {
   const { posts } = useCmsPostsBySlug(chairmanCategorySlug);
   const post = posts[0];
   const role = post?.categories?.[0]?.name || noDataText;
+  const image = post ? getPostImage(post) : "";
 
   return (
     <section className="w-full py-20 lg:py-28 bg-[#F0F4F8]">
@@ -109,8 +110,8 @@ function ChairmanSection() {
               <div
                 className="relative h-[420px] lg:h-[520px] bg-cover bg-center rounded-2xl overflow-hidden shadow-xl"
                 style={
-                  post?.thumbnail?.url
-                    ? { backgroundImage: `url('${post.thumbnail.url}')` }
+                  image
+                    ? { backgroundImage: `url('${image}')` }
                     : undefined
                 }
               >
@@ -123,7 +124,7 @@ function ChairmanSection() {
                     {post?.title || noDataText}
                   </p>
                 </div>
-                {!post?.thumbnail?.url && (
+                {!image && (
                   <div className="absolute inset-0 flex items-center justify-center text-sm text-white/70">
                     {noDataText}
                   </div>
