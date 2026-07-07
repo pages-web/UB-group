@@ -56,6 +56,8 @@ function Reveal({
 
 const jobsCategorySlug = "ajlyn-bairuud";
 const tendersCategorySlug = "tenderuud";
+const APPLICATION_FORM_SECTION_ID = "application-form";
+const TENDER_FORM_SECTION_ID = "tender-form";
 const APPLICATION_FORM_CODE = "eVBVTM";
 const APPLICATION_CHANNEL_ID = "NacImkee_2sr0fDAf-Q85";
 const FALLBACK_APPLICATION_FORM_ID = "yjpnLGmwtde7R8en6yINI";
@@ -283,6 +285,25 @@ export default function CareerPage() {
 
   const updateTenderField = (key: keyof typeof tenderForm, value: string) => {
     setTenderForm((current) => ({ ...current, [key]: value }));
+  };
+
+  const scrollToSection = (sectionId: string) => {
+    requestAnimationFrame(() => {
+      document.getElementById(sectionId)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  };
+
+  const handleJobApplyClick = (position: string) => {
+    updateAppField("position", position);
+    scrollToSection(APPLICATION_FORM_SECTION_ID);
+  };
+
+  const handleTenderParticipateClick = (tender: string) => {
+    updateTenderField("tender", tender);
+    scrollToSection(TENDER_FORM_SECTION_ID);
   };
 
   const handleTenderFilesChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -564,7 +585,11 @@ export default function CareerPage() {
                           </span>
                         </div>
                       </div>
-                      <button className="px-6 py-3 bg-[#EC6707] text-white text-sm font-medium rounded-lg hover:bg-[#B35405] transition-colors shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => handleJobApplyClick(job.title)}
+                        className="px-6 py-3 bg-[#EC6707] text-white text-sm font-medium rounded-lg hover:bg-[#B35405] transition-colors shrink-0"
+                      >
                         {t("apply")}
                       </button>
                     </div>
@@ -579,7 +604,10 @@ export default function CareerPage() {
       </section>
 
       {/* APPLICATION FORM — migrated to erxes/Apollo lead submission */}
-      <section className="w-full py-24 bg-[#F0F4F8]">
+      <section
+        id={APPLICATION_FORM_SECTION_ID}
+        className="w-full scroll-mt-24 py-24 bg-[#F0F4F8]"
+      >
         <div className="mx-auto max-w-3xl px-6 lg:px-8">
           <Reveal className="text-center mb-5">
             <span className="text-[11px] font-semibold tracking-[0.25em] text-[#EC6707] uppercase mb-4 block">
@@ -789,7 +817,11 @@ export default function CareerPage() {
                           </span>
                         </div>
                       </div>
-                      <button className="px-6 py-3 bg-[#EC6707] text-white text-sm font-medium rounded-lg hover:bg-[#B35405] transition-colors shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => handleTenderParticipateClick(tender.title)}
+                        className="px-6 py-3 bg-[#EC6707] text-white text-sm font-medium rounded-lg hover:bg-[#B35405] transition-colors shrink-0"
+                      >
                         {t("participate")}
                       </button>
                     </div>
@@ -804,7 +836,10 @@ export default function CareerPage() {
       </section>
 
       {/* TENDER FORM */}
-      <section className="w-full py-24 bg-[#F0F4F8]">
+      <section
+        id={TENDER_FORM_SECTION_ID}
+        className="w-full scroll-mt-24 py-24 bg-[#F0F4F8]"
+      >
         <div className="mx-auto max-w-3xl px-6 lg:px-8">
           <Reveal className="text-center mb-5">
             <span className="text-[11px] font-semibold tracking-[0.25em] text-[#EC6707] uppercase mb-4 block">

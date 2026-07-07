@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -10,6 +10,7 @@ import Image from "@/components/common/Image";
 import { CmsContent } from "@/components/common/CmsContent";
 import { useCmsPostsBySlug } from "@/hooks/useCmsPostsBySlug";
 import { CmsPost } from "@/types/cmsPostType";
+import { sortPostsByNewest } from "@/utils/utils";
 
 const featuredProjectsCategorySlug = "ontslokh-tusluud";
 const companiesCategorySlug = "kompaniud";
@@ -218,7 +219,7 @@ function LatestNewsSection({ locale }: { locale: string }) {
   const t = useTranslations("news");
   const commonT = useTranslations("common");
   const { posts } = useCmsPostsBySlug(newsCategorySlug);
-  const latestNews = posts.slice(0, 3);
+  const latestNews = useMemo(() => sortPostsByNewest(posts).slice(0, 3), [posts]);
 
   return (
     <section className="w-full py-20 sm:py-24 bg-white">

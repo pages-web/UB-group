@@ -2,16 +2,9 @@
 
 import NextImage, { ImageProps as NextImageProps } from "next/image";
 import { useState } from "react";
+import { getCmsFileUrl } from "@/utils/utils";
 
 const PLACEHOLDER = "/images/placeholder.png";
-
-function getFileUrl(url: string): string {
-  if (!url) return "";
-  if (url.startsWith("http")) return url;
-  const endpoint = process.env.NEXT_PUBLIC_ERXES_ENDPOINT || "";
-  const apiDomain = endpoint.replace(/\/gateway\/graphql$/, "");
-  return apiDomain ? `${apiDomain}/read-file?key=${url}` : url;
-}
 
 type ImageProps = Omit<NextImageProps, "src"> & {
   src?: string | null;
@@ -24,7 +17,7 @@ export default function Image({
   alt = "",
   ...props
 }: ImageProps) {
-  const resolved = getFileUrl(src || "") || fallback;
+  const resolved = getCmsFileUrl(src) || fallback;
   const [imgSrc, setImgSrc] = useState(resolved);
 
   return (

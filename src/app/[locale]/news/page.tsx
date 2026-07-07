@@ -10,6 +10,7 @@ import { CmsContent } from "@/components/common/CmsContent";
 import { useCmsPostsBySlug } from "@/hooks/useCmsPostsBySlug";
 import { usePageBySlug } from "@/hooks/usePageBySlug";
 import { CmsPost } from "@/types/cmsPostType";
+import { sortPostsByNewest } from "@/utils/utils";
 
 function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
   return (
@@ -56,16 +57,17 @@ export default function NewsPage() {
 
   const [activeCategory, setActiveCategory] = useState(allCategory);
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
+  const sortedNews = useMemo(() => sortPostsByNewest(news), [news]);
 
   const categories = useMemo(() => {
-    const customFieldCategories = news.flatMap(getNewsCategories);
+    const customFieldCategories = sortedNews.flatMap(getNewsCategories);
     return [allCategory, ...Array.from(new Set(customFieldCategories))];
-  }, [allCategory, news]);
+  }, [allCategory, sortedNews]);
 
   const filteredNews = useMemo(() => {
-    if (activeCategory === allCategory) return news;
-    return news.filter((item) => getNewsCategories(item).includes(activeCategory));
-  }, [activeCategory, allCategory, news]);
+    if (activeCategory === allCategory) return sortedNews;
+    return sortedNews.filter((item) => getNewsCategories(item).includes(activeCategory));
+  }, [activeCategory, allCategory, sortedNews]);
 
   const visibleNews = filteredNews.slice(0, visibleCount);
   const hasMore = visibleCount < filteredNews.length;

@@ -18,6 +18,7 @@ import { CmsContent } from "@/components/common/CmsContent";
 import { useCmsPostsBySlug } from "@/hooks/useCmsPostsBySlug";
 import { usePageBySlug } from "@/hooks/usePageBySlug";
 import { CmsPost } from "@/types/cmsPostType";
+import { getCmsFileUrl } from "@/utils/utils";
 
 const historyCategorySlug = "kompaniin-tuukh";
 const visionCategorySlug = "alsyn-kharaa-erkhem-zorilgo-unet-zuils";
@@ -26,7 +27,7 @@ const teamCategorySlug = "udirdlagyn-bag";
 const chairmanCategorySlug = "tuz-iin-darga";
 
 const getPostImage = (post: CmsPost) =>
-  post.thumbnail?.url || post.images?.[0]?.url || "";
+  getCmsFileUrl(post.thumbnail?.url || post.images?.[0]?.url);
 
 /* ─── Reveal wrapper ─── */
 function Reveal({
