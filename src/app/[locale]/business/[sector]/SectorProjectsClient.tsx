@@ -8,8 +8,9 @@ import { useTranslations } from "next-intl";
 import { CmsContent } from "@/components/common/CmsContent";
 import { useCmsPostsBySlug } from "@/hooks/useCmsPostsBySlug";
 import { CmsPost } from "@/types/cmsPostType";
+import { getCmsFileUrl } from "@/utils/utils";
 
-const getPostImage = (post: CmsPost) => post.thumbnail?.url || post.images?.[0]?.url || "";
+const getThumbnail = (post: CmsPost) => getCmsFileUrl(post.thumbnail?.url);
 
 function ProjectDrawer({
   project,
@@ -23,7 +24,7 @@ function ProjectDrawer({
   const commonT = useTranslations("common");
   const noDataText = commonT("noData");
   const scrollRef = useRef<HTMLDivElement>(null);
-  const gallery = project.images?.map((image) => image.url) || [];
+  const thumbnail = getThumbnail(project);
 
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = 0;
@@ -63,16 +64,11 @@ function ProjectDrawer({
           <X size={22} className="text-black/70" />
         </button>
 
-        {gallery.length ? (
-          <div className="grid grid-cols-2 gap-0">
-            {gallery.map((img, index) => (
-              <div
-                key={`${img}-${index}`}
-                className="h-48 sm:h-64 bg-cover bg-center"
-                style={{ backgroundImage: `url('${img}')` }}
-              />
-            ))}
-          </div>
+        {thumbnail ? (
+          <div
+            className="w-full h-[400px] bg-cover bg-center"
+            style={{ backgroundImage: `url('${thumbnail}')` }}
+          />
         ) : (
           <div className="h-56 bg-[#E2E8F0] flex items-center justify-center text-sm text-black/50">
             {noDataText}
@@ -134,8 +130,10 @@ export default function SectorProjectsClient({
 
         {projects.length ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project) => (
-              <motion.div
+            {projects.map((project) => {
+              const thumbnail = getThumbnail(project);
+
+              return <motion.div
                 key={project._id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -143,10 +141,10 @@ export default function SectorProjectsClient({
                 whileHover={{ y: -4 }}
                 className="bg-white rounded-2xl border border-black/5 p-6 shadow-sm hover:shadow-lg transition-shadow"
               >
-                {getPostImage(project) ? (
+                {thumbnail ? (
                   <div
                     className="h-40 w-full rounded-xl bg-cover bg-center mb-5"
-                    style={{ backgroundImage: `url('${getPostImage(project)}')` }}
+                    style={{ backgroundImage: `url('${thumbnail}')` }}
                   />
                 ) : (
                   <div className="h-40 w-full rounded-xl bg-[#E2E8F0] mb-5 flex items-center justify-center text-sm text-black/50">
@@ -166,8 +164,8 @@ export default function SectorProjectsClient({
                   {t("details")}
                   <ArrowRight size={14} />
                 </button>
-              </motion.div>
-            ))}
+              </motion.div>;
+            })}
           </div>
         ) : (
           <p className="text-center text-sm text-black/50">{noDataText}</p>

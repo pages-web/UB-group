@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 import { CmsContent } from "@/components/common/CmsContent";
 import { useCmsPostsBySlug } from "@/hooks/useCmsPostsBySlug";
 import { CmsPost } from "@/types/cmsPostType";
+import { getCmsFileUrl } from "@/utils/utils";
 
 interface BusinessPageClientProps {
   locale: string;
@@ -17,7 +18,7 @@ interface BusinessPageClientProps {
 const businessCategorySlug = "biznesiin-chiglel";
 const featuredProjectsCategorySlug = "ontslokh-tusluud";
 
-const getPostImage = (post: CmsPost) => post.thumbnail?.url || post.images?.[0]?.url || "";
+const getThumbnail = (post: CmsPost) => getCmsFileUrl(post.thumbnail?.url);
 
 function ProjectDrawer({
   project,
@@ -31,7 +32,7 @@ function ProjectDrawer({
   const commonT = useTranslations("common");
   const noDataText = commonT("noData");
   const scrollRef = useRef<HTMLDivElement>(null);
-  const gallery = project.images?.map((image) => image.url) || [];
+  const thumbnail = getThumbnail(project);
 
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = 0;
@@ -72,16 +73,11 @@ function ProjectDrawer({
           <X size={22} className="text-black/70" />
         </button>
 
-        {gallery.length ? (
-          <div className="grid grid-cols-2 gap-0">
-            {gallery.map((image, index) => (
-              <div
-                key={`${image}-${index}`}
-                className="h-48 sm:h-64 bg-cover bg-center"
-                style={{ backgroundImage: `url('${image}')` }}
-              />
-            ))}
-          </div>
+        {thumbnail ? (
+          <div
+            className="w-full h-[400px] bg-cover bg-center"
+            style={{ backgroundImage: `url('${thumbnail}')` }}
+          />
         ) : (
           <div className="h-56 bg-[#E2E8F0] flex items-center justify-center text-sm text-black/50">
             {noDataText}
@@ -105,12 +101,16 @@ function ProjectDrawer({
   );
 }
 
-export default function BusinessPageClient({ locale }: BusinessPageClientProps) {
+export default function BusinessPageClient({
+  locale,
+}: BusinessPageClientProps) {
   const t = useTranslations("business");
   const commonT = useTranslations("common");
   const noDataText = commonT("noData");
   const { posts: sectors } = useCmsPostsBySlug(businessCategorySlug);
-  const { posts: featuredProjects } = useCmsPostsBySlug(featuredProjectsCategorySlug);
+  const { posts: featuredProjects } = useCmsPostsBySlug(
+    featuredProjectsCategorySlug,
+  );
   const [selectedProject, setSelectedProject] = useState<CmsPost | null>(null);
 
   return (
@@ -146,7 +146,10 @@ export default function BusinessPageClient({ locale }: BusinessPageClientProps) 
                 <div className="hidden lg:block absolute top-0 left-0 right-0 h-px bg-white/20" />
                 {sectors.length ? (
                   sectors.map((sector, index) => (
-                    <div key={sector._id} className="relative min-w-[180px] flex-1">
+                    <div
+                      key={sector._id}
+                      className="relative min-w-[180px] flex-1"
+                    >
                       <div className="hidden lg:block absolute top-0 left-1/2 -translate-x-1/2 w-px h-12 bg-white/20" />
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -176,7 +179,10 @@ export default function BusinessPageClient({ locale }: BusinessPageClientProps) 
       </section>
 
       {/* FEATURED PROJECTS */}
-      <section id="featured-projects" className="w-full bg-[#FAFAF8] py-16 lg:py-20">
+      <section
+        id="featured-projects"
+        className="w-full bg-[#FAFAF8] py-16 lg:py-20"
+      >
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -196,6 +202,7 @@ export default function BusinessPageClient({ locale }: BusinessPageClientProps) 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {featuredProjects.length ? (
               featuredProjects.map((project, index) => {
+                const thumbnail = getThumbnail(project);
                 const about = project.customFieldsMap?.about as
                   | { duration?: string; location?: string }
                   | undefined;
@@ -213,10 +220,12 @@ export default function BusinessPageClient({ locale }: BusinessPageClientProps) 
                     className="group cursor-pointer text-left"
                   >
                     <div className="relative overflow-hidden rounded-xl mb-4 shadow-lg">
-                      {getPostImage(project) ? (
+                      {thumbnail ? (
                         <div
                           className="h-64 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                          style={{ backgroundImage: `url('${getPostImage(project)}')` }}
+                          style={{
+                            backgroundImage: `url('${thumbnail}')`,
+                          }}
                         />
                       ) : (
                         <div className="h-64 bg-[#E2E8F0] flex items-center justify-center text-sm text-black/50">
@@ -230,7 +239,8 @@ export default function BusinessPageClient({ locale }: BusinessPageClientProps) 
                       {project.title}
                     </h3>
                     <p className="text-sm text-[#737373]">
-                      {about?.duration || noDataText} • {about?.location || noDataText}
+                      {about?.duration || noDataText} •{" "}
+                      {about?.location || noDataText}
                     </p>
                   </motion.button>
                 );
@@ -263,43 +273,47 @@ export default function BusinessPageClient({ locale }: BusinessPageClientProps) 
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-            {sectors.length ? sectors.map((sector, index) => (
-              <motion.div
-                key={sector._id}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <Link
-                  href={`/${locale}/business/${sector.slug}`}
-                  className="group relative block w-full h-[320px] sm:h-[380px] lg:h-[420px] rounded-[40px] overflow-hidden text-left shadow-lg"
+            {sectors.length ? (
+              sectors.map((sector, index) => (
+                <motion.div
+                  key={sector._id}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
                 >
-                  <div className="relative w-full h-full">
-                    <div
-                      className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                      style={{ backgroundImage: `url('${getPostImage(sector)}')` }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10" />
-                    <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 lg:p-10">
-                      <div className="text-[#EC6707] text-xs sm:text-sm font-bold tracking-[0.2em] mb-2">
-                        UB
+                  <Link
+                    href={`/${locale}/business/${sector.slug}`}
+                    className="group relative block w-full h-[320px] sm:h-[380px] lg:h-[420px] rounded-[40px] overflow-hidden text-left shadow-lg"
+                  >
+                    <div className="relative w-full h-full">
+                      <div
+                        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                        style={{
+                          backgroundImage: `url('${getThumbnail(sector)}')`,
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10" />
+                      <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 lg:p-10">
+                        <div className="text-[#EC6707] text-xs sm:text-sm font-bold tracking-[0.2em] mb-2">
+                          UB
+                        </div>
+                        <h3 className="text-white text-2xl sm:text-3xl lg:text-4xl font-bold mb-3">
+                          {sector.title}
+                        </h3>
+                        <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-5 line-clamp-3 max-w-2xl">
+                          {sector.excerpt || noDataText}
+                        </p>
+                        <span className="inline-flex items-center gap-2 px-6 py-3 bg-[#EC6707] text-white text-sm font-semibold rounded-full hover:bg-[#B35405] transition-colors">
+                          {t("details")}
+                          <ArrowRight size={18} />
+                        </span>
                       </div>
-                      <h3 className="text-white text-2xl sm:text-3xl lg:text-4xl font-bold mb-3">
-                        {sector.title}
-                      </h3>
-                      <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-5 line-clamp-3 max-w-2xl">
-                        {sector.excerpt || noDataText}
-                      </p>
-                      <span className="inline-flex items-center gap-2 px-6 py-3 bg-[#EC6707] text-white text-sm font-semibold rounded-full hover:bg-[#B35405] transition-colors">
-                        {t("details")}
-                        <ArrowRight size={18} />
-                      </span>
                     </div>
-                  </div>
-                </Link>
-              </motion.div>
-            )) : (
+                  </Link>
+                </motion.div>
+              ))
+            ) : (
               <p className="lg:col-span-2 text-center text-sm text-[#64748B]">
                 {noDataText}
               </p>
