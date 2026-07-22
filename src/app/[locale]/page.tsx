@@ -10,13 +10,14 @@ import Image from "@/components/common/Image";
 import { CmsContent } from "@/components/common/CmsContent";
 import { useCmsPostsBySlug } from "@/hooks/useCmsPostsBySlug";
 import { CmsPost } from "@/types/cmsPostType";
-import { sortPostsByNewest } from "@/utils/utils";
+import { getCmsFileUrl, sortPostsByNewest } from "@/utils/utils";
 
 const featuredProjectsCategorySlug = "ontslokh-tusluud";
 const companiesCategorySlug = "kompaniud";
 const newsCategorySlug = "medee-medeelel";
 
-const getPostImage = (post: CmsPost) => post.thumbnail?.url || post.images?.[0]?.url || "";
+const getPostImage = (post: CmsPost) =>
+  getCmsFileUrl(post.thumbnail?.url || post.images?.[0]?.url);
 
 const formatDate = (date: string, locale: string) =>
   new Date(date).toLocaleDateString(locale === "mn" ? "mn-MN" : "en-US", {
@@ -64,7 +65,7 @@ function HeroSlider({ locale }: { locale: string }) {
 
   const currentIndex = current % slides.length;
   const slide = slides[currentIndex];
-  const image = slide.thumbnail?.url || slide.images?.[0]?.url || "";
+  const image = getPostImage(slide);
 
   return (
     <section className="w-full bg-white">
