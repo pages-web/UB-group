@@ -20,6 +20,7 @@ export const useCmsPostsBySlug = (slug: string) => {
     variables: {
       categoryIds: categoryId ? [categoryId] : undefined,
       status: "published",
+        sortField: "publishedDate",
     },
     skip: shouldWaitForCategory,
   });
