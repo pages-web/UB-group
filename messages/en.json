@@ -95,7 +95,9 @@
     "areas": "Business Areas",
     "backToAreas": "Back to Business Areas",
     "location": "Location",
-    "details": "Details"
+    "details": "Details",
+    "ongoingProjects": "Projects in Progress",
+    "completedProjects": "Successfully Completed Projects"
   },
   "sustainability": {
     "title": "Sustainability",

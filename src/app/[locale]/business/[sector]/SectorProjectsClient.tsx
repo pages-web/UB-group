@@ -12,6 +12,19 @@ import { getCmsFileUrl } from "@/utils/utils";
 
 const getThumbnail = (post: CmsPost) => getCmsFileUrl(post.thumbnail?.url);
 
+const projectGroups = [
+  {
+    id: "completed",
+    tagSlug: "amjilttai-kheregjuulsen-tusluud",
+    translationKey: "completedProjects",
+  },
+  {
+    id: "ongoing",
+    tagSlug: "kheregjuulj-bui-tusluud",
+    translationKey: "ongoingProjects",
+  },
+] as const;
+
 function ProjectDrawer({
   project,
   locale,
@@ -106,7 +119,16 @@ export default function SectorProjectsClient({
   const noDataText = commonT("noData");
   const { posts: projects } = useCmsPostsBySlug(sectorSlug);
   const [selectedProject, setSelectedProject] = useState<CmsPost | null>(null);
+  const [activeGroup, setActiveGroup] = useState<
+    (typeof projectGroups)[number]["id"]
+  >(projectGroups[0].id);
   const sectorName = projects[0]?.categories?.[0]?.name || noDataText;
+  const activeProjectGroup = projectGroups.find(
+    (group) => group.id === activeGroup,
+  )!;
+  const visibleProjects = projects.filter((project) =>
+    project.tags?.some((tag) => tag.slug === activeProjectGroup.tagSlug),
+  );
 
   return (
     <div className="w-full py-20 lg:py-28 bg-[#F8F9FB]">
@@ -128,43 +150,72 @@ export default function SectorProjectsClient({
           {t("projects")}
         </h2>
 
-        {projects.length ? (
+        <div
+          className="flex flex-wrap gap-3 mb-8"
+          role="tablist"
+          aria-label={t("projects")}
+        >
+          {projectGroups.map((group) => {
+            const isActive = activeGroup === group.id;
+
+            return (
+              <button
+                key={group.id}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setActiveGroup(group.id)}
+                className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-colors ${
+                  isActive
+                    ? "bg-[#EC6707] text-white"
+                    : "bg-white text-black/70 border border-black/10 hover:border-[#EC6707] hover:text-[#EC6707]"
+                }`}
+              >
+                {t(group.translationKey)}
+              </button>
+            );
+          })}
+        </div>
+
+        {visibleProjects.length ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project) => {
+            {visibleProjects.map((project) => {
               const thumbnail = getThumbnail(project);
 
-              return <motion.div
-                key={project._id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -4 }}
-                className="bg-white rounded-2xl border border-black/5 p-6 shadow-sm hover:shadow-lg transition-shadow"
-              >
-                {thumbnail ? (
-                  <div
-                    className="h-40 w-full rounded-xl bg-cover bg-center mb-5"
-                    style={{ backgroundImage: `url('${thumbnail}')` }}
-                  />
-                ) : (
-                  <div className="h-40 w-full rounded-xl bg-[#E2E8F0] mb-5 flex items-center justify-center text-sm text-black/50">
-                    {noDataText}
-                  </div>
-                )}
-                <h3 className="text-lg font-bold text-black mb-2">
-                  {project.title}
-                </h3>
-                <p className="text-sm text-black/60 line-clamp-2 mb-5">
-                  {project.excerpt || noDataText}
-                </p>
-                <button
-                  onClick={() => setSelectedProject(project)}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#EC6707] text-white text-sm font-semibold rounded-full hover:bg-[#B35405] transition-colors"
+              return (
+                <motion.div
+                  key={project._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -4 }}
+                  className="bg-white rounded-2xl border border-black/5 p-6 shadow-sm hover:shadow-lg transition-shadow"
                 >
-                  {t("details")}
-                  <ArrowRight size={14} />
-                </button>
-              </motion.div>;
+                  {thumbnail ? (
+                    <div
+                      className="h-40 w-full rounded-xl bg-cover bg-center mb-5"
+                      style={{ backgroundImage: `url('${thumbnail}')` }}
+                    />
+                  ) : (
+                    <div className="h-40 w-full rounded-xl bg-[#E2E8F0] mb-5 flex items-center justify-center text-sm text-black/50">
+                      {noDataText}
+                    </div>
+                  )}
+                  <h3 className="text-lg font-bold text-black mb-2">
+                    {project.title}
+                  </h3>
+                  <p className="text-sm text-black/60 line-clamp-2 mb-5">
+                    {project.excerpt || noDataText}
+                  </p>
+                  <button
+                    onClick={() => setSelectedProject(project)}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#EC6707] text-white text-sm font-semibold rounded-full hover:bg-[#B35405] transition-colors"
+                  >
+                    {t("details")}
+                    <ArrowRight size={14} />
+                  </button>
+                </motion.div>
+              );
             })}
           </div>
         ) : (

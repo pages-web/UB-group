@@ -42,6 +42,11 @@ const CmsPosts = gql`
           name
           slug
         }
+        tags {
+          _id
+          name
+          slug
+        }
         images {
           url
           type
@@ -71,6 +76,11 @@ const CmsPostsByType = gql`
           url
         }
         categories {
+          _id
+          name
+          slug
+        }
+        tags {
           _id
           name
           slug
@@ -121,6 +131,11 @@ export const postDetail = gql`
         url
       }
       categories {
+        _id
+        name
+        slug
+      }
+      tags {
         _id
         name
         slug

@@ -33,6 +33,11 @@ export interface CmsPost {
     name: string;
     slug?: string;
   }[];
+  tags?: {
+    _id: string;
+    name: string;
+    slug?: string;
+  }[];
   images?: {
     url: string;
     type?: string;

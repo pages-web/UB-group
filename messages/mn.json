@@ -95,7 +95,9 @@
     "areas": "Бизнесийн чиглэл",
     "backToAreas": "Бизнесийн чиглэл рүү буцах",
     "location": "Байршил",
-    "details": "Дэлгэрэнгүй"
+    "details": "Дэлгэрэнгүй",
+    "ongoingProjects": "Хэрэгжүүлж буй төслүүд",
+    "completedProjects": "Амжилттай хэрэгжүүлсэн төслүүд"
   },
   "sustainability": {
     "title": "Тогтвортой хөгжил",
