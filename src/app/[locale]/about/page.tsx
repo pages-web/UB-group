@@ -15,6 +15,8 @@ import {
   Quote,
 } from "lucide-react";
 import { CmsContent } from "@/components/common/CmsContent";
+import { useCmsCategories } from "@/hooks/useCmsCategories";
+import { useCmsPostByType } from "@/hooks/useCmsPostByType";
 import { useCmsPostsBySlug } from "@/hooks/useCmsPostsBySlug";
 import { usePageBySlug } from "@/hooks/usePageBySlug";
 import { CmsPost } from "@/types/cmsPostType";
@@ -23,8 +25,13 @@ import { getCmsFileUrl } from "@/utils/utils";
 const historyCategorySlug = "kompaniin-tuukh";
 const visionCategorySlug = "alsyn-kharaa-erkhem-zorilgo-unet-zuils";
 const achievementsCategorySlug = "bidnii-ololt-amjilt_2";
-const teamCategorySlug = "udirdlagyn-bag";
 const chairmanCategorySlug = "tuz-iin-darga";
+const clientPortalId = "3VGniCFkSThuWpzd9JfaH";
+const managementTeamPostType = "managment_team";
+const managementTeamCategorySlug = "udirdlagyn-bag";
+const constructionLeadershipPostType = "construction_industry_management_team";
+const constructionLeadershipCategorySlug =
+  "buteen-baiguulaltyn-salbaryn-udirdlagyn-bag";
 
 const getPostImage = (post: CmsPost) =>
   getCmsFileUrl(post.thumbnail?.url || post.images?.[0]?.url);
@@ -110,9 +117,7 @@ function ChairmanSection() {
               <div
                 className="relative h-[420px] lg:h-[520px] bg-cover bg-center rounded-2xl overflow-hidden shadow-xl"
                 style={
-                  image
-                    ? { backgroundImage: `url('${image}')` }
-                    : undefined
+                  image ? { backgroundImage: `url('${image}')` } : undefined
                 }
               >
                 <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/50 to-transparent" />
@@ -134,9 +139,9 @@ function ChairmanSection() {
           </Reveal>
 
           <Reveal delay={0.15}>
-              <div className="lg:pl-4">
-                <span className="text-[11px] font-semibold tracking-[0.25em] text-[#EC6707] uppercase mb-5 block">
-                  {t("chairmanMessage")}
+            <div className="lg:pl-4">
+              <span className="text-[11px] font-semibold tracking-[0.25em] text-[#EC6707] uppercase mb-5 block">
+                {t("chairmanMessage")}
               </span>
               <CmsContent
                 html={post?.content || noDataText}
@@ -163,11 +168,11 @@ function ChairmanSection() {
 }
 
 type LeadershipDepartment = {
-  titleMn: string;
-  titleEn: string;
+  id: string;
+  title: string;
   members: {
     name: string;
-    role: string;
+    role?: string;
     image?: string;
   }[];
 };
@@ -326,30 +331,49 @@ function HistoryTimeline({ locale }: { locale: string }) {
 }
 
 /* ─── Leadership departments with horizontal swipe ─── */
-function TeamSlider({ locale }: { locale: string }) {
-  const t = useTranslations("about");
+function TeamSlider({
+  locale,
+  postTypeName,
+  parentCategorySlug,
+  headingTop,
+  headingBottom,
+}: {
+  locale: string;
+  postTypeName: string;
+  parentCategorySlug: string;
+  headingTop: string;
+  headingBottom: string;
+}) {
   const commonT = useTranslations("common");
-  const isMn = locale === "mn";
   const noDataText = commonT("noData");
-  const { posts } = useCmsPostsBySlug(teamCategorySlug);
+  const { posts } = useCmsPostByType(postTypeName);
+  const { categories } = useCmsCategories(clientPortalId, locale);
+  const categoryNames = new Map(
+    categories
+      .filter((category) => category.parent?.slug === parentCategorySlug)
+      .map((category) => [category._id, category.name]),
+  );
   const cmsDepartments = Object.values(
     posts.reduce<Record<string, LeadershipDepartment>>((groups, post) => {
-      const subsidiary = post.customFieldsMap?.Subsidiary as
-        | { company?: string }
-        | undefined;
-      const company = subsidiary?.company || noDataText;
-      const group = groups[company] || {
-        titleMn: company,
-        titleEn: company,
-        members: [],
-      };
+      const categories = post.categories ?? [];
 
-      group.members.push({
-        name: post.title,
-        role: post.excerpt || noDataText,
-        image: getPostImage(post),
+      categories.forEach((category) => {
+        const categoryId = category._id;
+        const categoryName = categoryNames.get(categoryId);
+        if (!categoryName) return;
+        const group = groups[categoryId] || {
+          id: categoryId,
+          title: categoryName,
+          members: [],
+        };
+
+        group.members.push({
+          name: post.title,
+          role: post.excerpt,
+          image: getPostImage(post),
+        });
+        groups[categoryId] = group;
       });
-      groups[company] = group;
 
       return groups;
     }, {}),
@@ -361,10 +385,10 @@ function TeamSlider({ locale }: { locale: string }) {
         <Reveal className="text-center mb-14 lg:mb-20">
           <div className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-tight">
             <span className="text-[#EC6707] text-2xl sm:text-3xl lg:text-4xl block">
-              {t("leadership")}
+              {headingTop}
             </span>
             <span className="text-[#000000] text-xl sm:text-2xl lg:text-3xl block">
-              {t("teamShort")}
+              {headingBottom}
             </span>
           </div>
         </Reveal>
@@ -372,12 +396,7 @@ function TeamSlider({ locale }: { locale: string }) {
         <div className="space-y-16 lg:space-y-24">
           {cmsDepartments.length ? (
             cmsDepartments.map((dept, deptIndex) => (
-              <DepartmentRow
-                key={dept.titleMn}
-                dept={dept}
-                deptIndex={deptIndex}
-                isMn={isMn}
-              />
+              <DepartmentRow key={dept.id} dept={dept} deptIndex={deptIndex} />
             ))
           ) : (
             <p className="text-center text-sm text-[#64748B]">{noDataText}</p>
@@ -391,11 +410,9 @@ function TeamSlider({ locale }: { locale: string }) {
 function DepartmentRow({
   dept,
   deptIndex,
-  isMn,
 }: {
   dept: LeadershipDepartment;
   deptIndex: number;
-  isMn: boolean;
 }) {
   const commonT = useTranslations("common");
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -435,7 +452,7 @@ function DepartmentRow({
     <Reveal delay={deptIndex * 0.1}>
       <div>
         <h3 className="text-2xl lg:text-3xl font-bold text-center text-[#000000] mb-8 lg:mb-10">
-          {isMn ? dept.titleMn : dept.titleEn}
+          {dept.title}
         </h3>
 
         <div className="relative group/slider">
@@ -480,7 +497,7 @@ function DepartmentRow({
 
                 <div className="absolute bottom-0 left-0 right-0 p-5 lg:p-6">
                   <p className="text-white/60 text-[11px] font-medium tracking-wider uppercase mb-1">
-                    {isMn ? dept.titleMn : dept.titleEn}
+                    {dept.title}
                   </p>
                   <h4 className="text-white text-xl lg:text-2xl font-bold mb-1">
                     {member.name}
@@ -667,7 +684,22 @@ export default function AboutPage() {
       <HistoryTimeline locale={locale} />
 
       {/* TEAM — leadership slider */}
-      <TeamSlider locale={locale} />
+      <TeamSlider
+        locale={locale}
+        postTypeName={managementTeamPostType}
+        parentCategorySlug={managementTeamCategorySlug}
+        headingTop={t("leadership")}
+        headingBottom={t("teamShort")}
+      />
+
+      {/* CONSTRUCTION LEADERSHIP TEAM */}
+      <TeamSlider
+        locale={locale}
+        postTypeName={constructionLeadershipPostType}
+        parentCategorySlug={constructionLeadershipCategorySlug}
+        headingTop={t("constructionLeadershipTop")}
+        headingBottom={t("constructionLeadershipBottom")}
+      />
 
       {/* CTA + SLOGAN */}
       <section className="relative w-full py-16 lg:py-20 overflow-hidden bg-[#000000]">

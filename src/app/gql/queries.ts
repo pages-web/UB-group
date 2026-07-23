@@ -52,6 +52,57 @@ const CmsPosts = gql`
   }
 `;
 
+const CmsPostsByType = gql`
+  query cpPostListByType($type: String, $status: PostStatus, $sortField: String) {
+    cpPostList(type: $type, status: $status, sortField: $sortField) {
+      posts {
+        _id
+        slug
+        title
+        content
+        excerpt
+        featured
+        status
+        createdAt
+        updatedAt
+        customFieldsMap
+        videoUrl
+        thumbnail {
+          url
+        }
+        categories {
+          _id
+          name
+          slug
+        }
+        images {
+          url
+          type
+          name
+        }
+      }
+    }
+  }
+`;
+
+const CmsCategories = gql`
+  query CpCategories($clientPortalId: String!, $language: String, $limit: Int) {
+    cpCategories(
+      clientPortalId: $clientPortalId
+      language: $language
+      limit: $limit
+    ) {
+      list {
+        _id
+        name
+        parent {
+          slug
+        }
+      }
+    }
+  }
+`;
+
 export const postDetail = gql`
   query cpPost($id: String, $slug: String, $language: String) {
     cpPost(_id: $id, slug: $slug, language: $language) {
@@ -142,4 +193,11 @@ export const categories = gql`
   }
 `;
 
-export const queries = { CmsPosts, categories, pageDetail, postDetail };
+export const queries = {
+  CmsPosts,
+  CmsPostsByType,
+  CmsCategories,
+  categories,
+  pageDetail,
+  postDetail,
+};
