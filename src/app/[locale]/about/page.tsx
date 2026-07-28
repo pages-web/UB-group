@@ -26,6 +26,8 @@ const historyCategorySlug = "kompaniin-tuukh";
 const visionCategorySlug = "alsyn-kharaa-erkhem-zorilgo-unet-zuils";
 const achievementsCategorySlug = "bidnii-ololt-amjilt_2";
 const chairmanCategorySlug = "tuz-iin-darga";
+// TODO: Replace with the General Director message category slug.
+const generalDirectorCategorySlug = "erunkhii-zakhirlyn-mendchilgee";
 const clientPortalId = "3VGniCFkSThuWpzd9JfaH";
 const managementTeamPostType = "managment_team";
 const managementTeamCategorySlug = "udirdlagyn-bag";
@@ -158,6 +160,76 @@ function ChairmanSection() {
                   </p>
                   <p className="text-xs text-[#64748B]">{role}</p>
                 </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── General Director message section ─── */
+function GeneralDirectorSection() {
+  const t = useTranslations("about");
+  const commonT = useTranslations("common");
+  const noDataText = commonT("noData");
+  const { posts } = useCmsPostsBySlug(generalDirectorCategorySlug);
+  const post = posts[0];
+  const role = post?.categories?.[0]?.name || noDataText;
+  const image = post ? getPostImage(post) : "";
+
+  return (
+    <section className="w-full py-20 lg:py-28 bg-[#F0F4F8] border-t border-[#DDE5ED]">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <Reveal delay={0.15} className="order-2 lg:order-1">
+            <div className="lg:pr-4">
+              <span className="text-[11px] font-semibold tracking-[0.25em] text-[#EC6707] uppercase mb-5 block">
+                {t("generalDirectorMessage")}
+              </span>
+              <CmsContent
+                html={post?.content || noDataText}
+                className="mb-10 text-[#334155] [&_h2]:text-3xl sm:[&_h2]:text-4xl lg:[&_h2]:text-[42px] [&_h2]:font-bold [&_h2]:text-[#000000] [&_h2]:leading-tight [&_h2]:mb-8 [&_p]:text-[15px] lg:[&_p]:text-base [&_p]:leading-[1.85] [&_p]:text-[#334155]"
+              />
+              <div className="flex items-start gap-4 p-6 bg-white rounded-2xl border-r-4 border-[#EC6707] shadow-sm">
+                <Quote className="shrink-0 text-[#EC6707]" size={28} />
+                <div>
+                  <p className="text-[15px] text-[#334155] italic leading-relaxed mb-3">
+                    {post?.excerpt || noDataText}
+                  </p>
+                  <p className="text-sm font-semibold text-[#000000]">
+                    {post?.title || noDataText}
+                  </p>
+                  <p className="text-xs text-[#64748B]">{role}</p>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal className="order-1 lg:order-2">
+            <div className="relative">
+              <div className="absolute -inset-4 lg:-inset-6 bg-white rounded-3xl shadow-lg" />
+              <div
+                className="relative h-[420px] lg:h-[520px] bg-cover bg-center rounded-2xl overflow-hidden shadow-xl"
+                style={
+                  image ? { backgroundImage: `url('${image}')` } : undefined
+                }
+              >
+                <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/50 to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6 text-right">
+                  <p className="text-white/80 text-sm font-medium tracking-wider uppercase mb-1">
+                    {role}
+                  </p>
+                  <p className="text-white text-2xl font-bold">
+                    {post?.title || noDataText}
+                  </p>
+                </div>
+                {!image && (
+                  <div className="absolute inset-0 flex items-center justify-center text-sm text-white/70">
+                    {noDataText}
+                  </div>
+                )}
               </div>
             </div>
           </Reveal>
@@ -595,6 +667,9 @@ export default function AboutPage() {
 
       {/* CHAIRMAN MESSAGE */}
       <ChairmanSection />
+
+      {/* GENERAL DIRECTOR MESSAGE */}
+      <GeneralDirectorSection />
 
       {/* VISION, MISSION & VALUES */}
       <section className="w-full py-16 lg:py-12 bg-[#E8EEF4]">
