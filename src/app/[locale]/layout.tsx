@@ -47,7 +47,7 @@ export default async function LocaleLayout({
       className={`${manrope.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#F0F4F8] text-[#000000] font-sans">
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider key={locale} locale={locale} messages={messages}>
           <ApolloClientProvider>
             <Header />
             <main className="flex-1">

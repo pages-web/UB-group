@@ -4,8 +4,10 @@ import { useQuery } from "@apollo/client/react";
 import { queries } from "@/app/gql/queries";
 import { useCategories } from "./useCategory";
 import { IPostList } from "@/types/cmsPostType";
+import { useLocale } from "next-intl";
 
 export const useCmsPostsBySlug = (slug: string) => {
+  const locale = useLocale();
   const {
     loading: categoryLoading,
     error: categoryError,
@@ -20,7 +22,8 @@ export const useCmsPostsBySlug = (slug: string) => {
     variables: {
       categoryIds: categoryId ? [categoryId] : undefined,
       status: "published",
-        sortField: "publishedDate",
+      sortField: "publishedDate",
+      language: locale,
     },
     skip: shouldWaitForCategory,
   });

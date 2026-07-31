@@ -45,7 +45,7 @@ function HeroSlider({ locale }: { locale: string }) {
   useEffect(() => {
     if (!slides.length) return;
 
-    const timer = setInterval(next, 5000);
+    const timer = setInterval(next, 6500);
     return () => clearInterval(timer);
   }, [next, slides.length]);
 

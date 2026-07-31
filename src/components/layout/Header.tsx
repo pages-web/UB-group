@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useCmsPostsBySlug } from "@/hooks/useCmsPostsBySlug";
 
 const businessCategorySlug = "biznesiin-chiglel";
@@ -57,8 +57,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
-  const locale = pathname.split("/")[1] || "mn";
+  const locale = useLocale();
   const pathWithoutLocale = pathname.replace(new RegExp(`^/${locale}`), "") || "/";
   const { posts: businessPosts } = useCmsPostsBySlug(businessCategorySlug);
   const navItems = baseNavItems.map((item) =>
@@ -90,11 +89,6 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const switchLocale = (newLocale: string) => {
-    const newPath = `/${newLocale}${pathWithoutLocale}`;
-    router.push(newPath);
-  };
 
   return (
     <>
@@ -189,8 +183,9 @@ export default function Header() {
 
             {/* Language Switcher */}
             <div className="hidden lg:flex items-center gap-1">
-              <button
-                onClick={() => switchLocale("mn")}
+              <Link
+                href={`/mn${pathWithoutLocale}`}
+                hrefLang="mn"
                 className={`px-3 py-1.5 text-[11px] font-semibold tracking-wider rounded-full transition-all duration-300 ${
                   locale === "mn"
                     ? "bg-[#EC6707] text-white"
@@ -200,9 +195,10 @@ export default function Header() {
                 }`}
               >
                 MN
-              </button>
-              <button
-                onClick={() => switchLocale("en")}
+              </Link>
+              <Link
+                href={`/en${pathWithoutLocale}`}
+                hrefLang="en"
                 className={`px-3 py-1.5 text-[11px] font-semibold tracking-wider rounded-full transition-all duration-300 ${
                   locale === "en"
                     ? "bg-[#EC6707] text-white"
@@ -212,7 +208,7 @@ export default function Header() {
                 }`}
               >
                 EN
-              </button>
+              </Link>
             </div>
 
             {/* Mobile menu button */}
@@ -265,22 +261,26 @@ export default function Header() {
                 ))}
               </div>
               <div className="flex items-center gap-3 mt-8 pt-8 border-t border-[#E2E8F0]">
-                <button
-                  onClick={() => switchLocale("mn")}
+                <Link
+                  href={`/mn${pathWithoutLocale}`}
+                  hrefLang="mn"
+                  onClick={() => setMobileMenuOpen(false)}
                   className={`px-4 py-2 text-sm font-semibold tracking-wider rounded-full transition-all ${
                     locale === "mn" ? "bg-[#EC6707] text-white" : "text-[#64748B]"
                   }`}
                 >
                   MN
-                </button>
-                <button
-                  onClick={() => switchLocale("en")}
+                </Link>
+                <Link
+                  href={`/en${pathWithoutLocale}`}
+                  hrefLang="en"
+                  onClick={() => setMobileMenuOpen(false)}
                   className={`px-4 py-2 text-sm font-semibold tracking-wider rounded-full transition-all ${
                     locale === "en" ? "bg-[#EC6707] text-white" : "text-[#64748B]"
                   }`}
                 >
                   EN
-                </button>
+                </Link>
               </div>
             </motion.div>
           </motion.div>

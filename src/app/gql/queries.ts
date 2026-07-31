@@ -10,6 +10,7 @@ const CmsPosts = gql`
     $tagIds: [String]
     $sortField: String
     $sortDirection: String
+    $language: String
   ) {
     cpPostList(
       featured: $featured
@@ -20,6 +21,7 @@ const CmsPosts = gql`
       tagIds: $tagIds
       sortField: $sortField
       sortDirection: $sortDirection
+      language: $language
     ) {
       totalCount
       posts {
@@ -58,8 +60,18 @@ const CmsPosts = gql`
 `;
 
 const CmsPostsByType = gql`
-  query cpPostListByType($type: String, $status: PostStatus, $sortField: String) {
-    cpPostList(type: $type, status: $status, sortField: $sortField) {
+  query cpPostListByType(
+    $type: String
+    $status: PostStatus
+    $sortField: String
+    $language: String
+  ) {
+    cpPostList(
+      type: $type
+      status: $status
+      sortField: $sortField
+      language: $language
+    ) {
       posts {
         _id
         slug
