@@ -34,6 +34,8 @@ const newsCategoryTranslationKeys = [
   "transport",
   "lifestyle",
   "management",
+  "news",
+  "other",
 ] as const;
 
 const getNewsCategories = (post: CmsPost) => {

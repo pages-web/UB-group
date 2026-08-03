@@ -39,6 +39,8 @@ const baseNavItems = [
       { labelKey: "transport", href: "/news?category=transport" },
       { labelKey: "lifestyle", href: "/news?category=lifestyle" },
       { labelKey: "management", href: "/news?category=management" },
+      { labelKey: "news", href: "/news?category=news" },
+      { labelKey: "other", href: "/news?category=other" },
     ],
   },
   {
