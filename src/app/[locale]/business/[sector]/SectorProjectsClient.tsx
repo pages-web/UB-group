@@ -6,11 +6,9 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { CmsContent } from "@/components/common/CmsContent";
+import Image from "@/components/common/Image";
 import { useCmsPostsBySlug } from "@/hooks/useCmsPostsBySlug";
 import { CmsPost } from "@/types/cmsPostType";
-import { getCmsFileUrl } from "@/utils/utils";
-
-const getThumbnail = (post: CmsPost) => getCmsFileUrl(post.thumbnail?.url);
 
 const projectGroups = [
   {
@@ -37,7 +35,7 @@ function ProjectDrawer({
   const commonT = useTranslations("common");
   const noDataText = commonT("noData");
   const scrollRef = useRef<HTMLDivElement>(null);
-  const thumbnail = getThumbnail(project);
+  const thumbnail = project.thumbnail?.url || project.images?.[0]?.url;
 
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = 0;
@@ -78,10 +76,14 @@ function ProjectDrawer({
         </button>
 
         {thumbnail ? (
-          <div
-            className="w-full h-[400px] bg-cover bg-center"
-            style={{ backgroundImage: `url('${thumbnail}')` }}
-          />
+          <div className="relative w-full h-[400px]">
+            <Image
+              src={thumbnail}
+              alt={project.title}
+              fill
+              className="object-cover"
+            />
+          </div>
         ) : (
           <div className="h-56 bg-[#E2E8F0] flex items-center justify-center text-sm text-black/50">
             {noDataText}
@@ -180,7 +182,8 @@ export default function SectorProjectsClient({
         {visibleProjects.length ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {visibleProjects.map((project) => {
-              const thumbnail = getThumbnail(project);
+              const thumbnail =
+                project.thumbnail?.url || project.images?.[0]?.url;
 
               return (
                 <motion.div
@@ -192,10 +195,14 @@ export default function SectorProjectsClient({
                   className="bg-white rounded-2xl border border-black/5 p-6 shadow-sm hover:shadow-lg transition-shadow"
                 >
                   {thumbnail ? (
-                    <div
-                      className="h-40 w-full rounded-xl bg-cover bg-center mb-5"
-                      style={{ backgroundImage: `url('${thumbnail}')` }}
-                    />
+                    <div className="relative h-40 w-full rounded-xl overflow-hidden mb-5">
+                      <Image
+                        src={thumbnail}
+                        alt={project.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
                   ) : (
                     <div className="h-40 w-full rounded-xl bg-[#E2E8F0] mb-5 flex items-center justify-center text-sm text-black/50">
                       {noDataText}

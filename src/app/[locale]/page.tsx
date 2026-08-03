@@ -9,15 +9,11 @@ import { useTranslations } from "next-intl";
 import Image from "@/components/common/Image";
 import { CmsContent } from "@/components/common/CmsContent";
 import { useCmsPostsBySlug } from "@/hooks/useCmsPostsBySlug";
-import { CmsPost } from "@/types/cmsPostType";
-import { getCmsFileUrl, sortPostsByNewest } from "@/utils/utils";
+import { sortPostsByNewest } from "@/utils/utils";
 
 const featuredProjectsCategorySlug = "ontslokh-tusluud";
 const companiesCategorySlug = "kompaniud";
 const newsCategorySlug = "medee-medeelel";
-
-const getPostImage = (post: CmsPost) =>
-  getCmsFileUrl(post.thumbnail?.url || post.images?.[0]?.url);
 
 const formatDate = (date: string, locale: string) =>
   new Date(date).toLocaleDateString(locale === "mn" ? "mn-MN" : "en-US", {
@@ -65,7 +61,7 @@ function HeroSlider({ locale }: { locale: string }) {
 
   const currentIndex = current % slides.length;
   const slide = slides[currentIndex];
-  const image = getPostImage(slide);
+  const image = slide.thumbnail?.url || slide.images?.[0]?.url;
 
   return (
     <section className="w-full bg-white">
@@ -78,9 +74,18 @@ function HeroSlider({ locale }: { locale: string }) {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url('${image}')` }}
-            />
+              className="absolute inset-0"
+            >
+              {image && (
+                <Image
+                  src={image}
+                  alt={slide.title}
+                  fill
+                  priority
+                  className="object-cover"
+                />
+              )}
+            </motion.div>
           </AnimatePresence>
 
           <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/90 via-[#000000]/30 to-[#000000]/20" />
@@ -254,10 +259,12 @@ function LatestNewsSection({ locale }: { locale: string }) {
                 className="group block"
               >
                 <div className="relative h-56 sm:h-64 overflow-hidden rounded-xl bg-[#E2E8F0] mb-5">
-                  {getPostImage(item) && (
-                    <div
-                      className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                      style={{ backgroundImage: `url('${getPostImage(item)}')` }}
+                  {(item.thumbnail?.url || item.images?.[0]?.url) && (
+                    <Image
+                      src={item.thumbnail?.url || item.images?.[0]?.url}
+                      alt={item.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

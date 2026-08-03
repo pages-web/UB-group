@@ -108,12 +108,8 @@ const CmsPostsByType = gql`
 `;
 
 const CmsCategories = gql`
-  query CpCategories($clientPortalId: String!, $language: String, $limit: Int) {
-    cpCategories(
-      clientPortalId: $clientPortalId
-      language: $language
-      limit: $limit
-    ) {
+  query CpCategories($language: String, $limit: Int) {
+    cpCategories(language: $language, limit: $limit) {
       list {
         _id
         name

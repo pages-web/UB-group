@@ -15,11 +15,11 @@ interface CmsCategoriesData {
   };
 }
 
-export const useCmsCategories = (clientPortalId: string, language: string) => {
+export const useCmsCategories = (language: string) => {
   const { loading, error, data } = useQuery<CmsCategoriesData>(
     queries.CmsCategories,
     {
-      variables: { clientPortalId, language, limit: 30 },
+      variables: { language, limit: 30 },
     },
   );
 

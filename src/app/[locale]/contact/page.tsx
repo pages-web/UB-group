@@ -17,6 +17,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { CmsContent } from "@/components/common/CmsContent";
+import Image from "@/components/common/Image";
 import { useContactInfo } from "@/hooks/useContactInfo";
 import { usePageBySlug } from "@/hooks/usePageBySlug";
 import { WIDGETS_LEAD_CONNECT, WIDGETS_SAVE_LEAD } from "@/app/gql/mutations";
@@ -388,6 +389,7 @@ export default function ContactPage() {
   const commonT = useTranslations("common");
   const { contactInfo } = useContactInfo();
   const { page } = usePageBySlug("contact");
+  const pageImage = page?.thumbnail?.url;
   const noDataText = commonT("noData");
   const socialLinks = [
     { icon: FacebookIcon, href: getLink(contactInfo?.facebook), label: "Facebook" },
@@ -400,10 +402,13 @@ export default function ContactPage() {
     <>
       {/* HERO */}
       <section className="relative w-full py-16 lg:py-20 overflow-hidden bg-[#000000]">
-        {page?.thumbnail?.url && (
-          <div
-            className="absolute inset-0 bg-cover bg-center opacity-10"
-            style={{ backgroundImage: `url('${page.thumbnail.url}')` }}
+        {pageImage && (
+          <Image
+            src={pageImage}
+            alt=""
+            fill
+            priority
+            className="object-cover opacity-10"
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/80 via-[#000000]/60 to-[#000000]/80" />

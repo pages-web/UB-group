@@ -1,14 +1,16 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client";
-import { link } from "./links";
+import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 
-let instance: ApolloClient | undefined;
+const httpLink = new HttpLink({
+  uri:
+    process.env.NEXT_PUBLIC_ERXES_ENDPOINT ??
+    process.env.NEXT_PUBLIC_GRAPHQL_URL,
+  credentials: "include",
+  headers: {
+    "x-app-token": process.env.NEXT_PUBLIC_ERXES_APP_TOKEN ?? "",
+  },
+});
 
-export function getApolloClient(): ApolloClient {
-  if (!instance) {
-    instance = new ApolloClient({
-      link,
-      cache: new InMemoryCache(),
-    });
-  }
-  return instance;
-}
+export const apolloClient = new ApolloClient({
+  link: httpLink,
+  cache: new InMemoryCache(),
+});

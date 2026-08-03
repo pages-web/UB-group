@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { ArrowRight, Calendar, ChevronDown } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { CmsContent } from "@/components/common/CmsContent";
+import Image from "@/components/common/Image";
 import { useCmsPostsBySlug } from "@/hooks/useCmsPostsBySlug";
 import { usePageBySlug } from "@/hooks/usePageBySlug";
 import { CmsPost } from "@/types/cmsPostType";
@@ -27,8 +28,14 @@ function Reveal({ children, delay = 0, className = "" }: { children: React.React
 }
 
 const newsCategorySlug = "medee-medeelel";
+const newsCategoryTranslationKeys = [
+  "constructionProjects",
+  "financeInvestment",
+  "transport",
+  "lifestyle",
+  "management",
+] as const;
 
-const getPostImage = (post: CmsPost) => post.thumbnail?.url || post.images?.[0]?.url || "";
 const getNewsCategories = (post: CmsPost) => {
   const news = post.customFieldsMap?.news as { type?: string[] } | undefined;
   return Array.isArray(news?.type) ? news.type.filter(Boolean) : [];
@@ -47,6 +54,7 @@ const INITIAL_COUNT = INITIAL_ROWS * CARDS_PER_ROW;
 
 export default function NewsPage() {
   const t = useTranslations("news");
+  const navT = useTranslations("nav");
   const commonT = useTranslations("common");
   const pathname = usePathname();
   const locale = pathname.split("/")[1] || "mn";
@@ -54,15 +62,18 @@ export default function NewsPage() {
   const allCategory = commonT("all");
   const { page } = usePageBySlug("news");
   const { posts: news } = useCmsPostsBySlug(newsCategorySlug);
+  const pageImage = page?.thumbnail?.url;
 
   const [activeCategory, setActiveCategory] = useState(allCategory);
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
   const sortedNews = useMemo(() => sortPostsByNewest(news), [news]);
 
-  const categories = useMemo(() => {
-    const customFieldCategories = sortedNews.flatMap(getNewsCategories);
-    return [allCategory, ...Array.from(new Set(customFieldCategories))];
-  }, [allCategory, sortedNews]);
+  const configuredCategories = newsCategoryTranslationKeys.map((key) => navT(key));
+  const customFieldCategories = sortedNews.flatMap(getNewsCategories);
+  const categories = [
+    allCategory,
+    ...Array.from(new Set([...configuredCategories, ...customFieldCategories])),
+  ];
 
   const filteredNews = useMemo(() => {
     if (activeCategory === allCategory) return sortedNews;
@@ -85,10 +96,13 @@ export default function NewsPage() {
     <>
       {/* HERO */}
       <section className="relative w-full pt-24 pb-16 overflow-hidden bg-[#000000]">
-        {page?.thumbnail?.url && (
-          <div
-            className="absolute inset-0 bg-cover bg-center opacity-30"
-            style={{ backgroundImage: `url('${page.thumbnail.url}')` }}
+        {pageImage && (
+          <Image
+            src={pageImage}
+            alt=""
+            fill
+            priority
+            className="object-cover opacity-30"
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/70 via-[#000000]/40 to-[#000000]" />
@@ -140,10 +154,12 @@ export default function NewsPage() {
                     href={`/${locale}/news/${item.slug}`}
                     className="group relative block w-full aspect-[3/4] rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-700"
                   >
-                    {getPostImage(item) && (
-                      <div
-                        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                        style={{ backgroundImage: `url('${getPostImage(item)}')` }}
+                    {(item.thumbnail?.url || item.images?.[0]?.url) && (
+                      <Image
+                        src={item.thumbnail?.url || item.images?.[0]?.url}
+                        alt={item.title}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/90 via-[#000000]/30 to-transparent" />

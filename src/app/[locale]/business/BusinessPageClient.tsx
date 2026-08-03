@@ -4,12 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, X } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { CmsContent } from "@/components/common/CmsContent";
+import Image from "@/components/common/Image";
 import { useCmsPostsBySlug } from "@/hooks/useCmsPostsBySlug";
 import { CmsPost } from "@/types/cmsPostType";
-import { getCmsFileUrl } from "@/utils/utils";
 
 interface BusinessPageClientProps {
   locale: string;
@@ -17,8 +16,6 @@ interface BusinessPageClientProps {
 
 const businessCategorySlug = "biznesiin-chiglel";
 const featuredProjectsCategorySlug = "ontslokh-tusluud";
-
-const getThumbnail = (post: CmsPost) => getCmsFileUrl(post.thumbnail?.url);
 
 function ProjectDrawer({
   project,
@@ -32,7 +29,7 @@ function ProjectDrawer({
   const commonT = useTranslations("common");
   const noDataText = commonT("noData");
   const scrollRef = useRef<HTMLDivElement>(null);
-  const thumbnail = getThumbnail(project);
+  const thumbnail = project.thumbnail?.url || project.images?.[0]?.url;
 
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = 0;
@@ -74,10 +71,14 @@ function ProjectDrawer({
         </button>
 
         {thumbnail ? (
-          <div
-            className="w-full h-[400px] bg-cover bg-center"
-            style={{ backgroundImage: `url('${thumbnail}')` }}
-          />
+          <div className="relative w-full h-[400px]">
+            <Image
+              src={thumbnail}
+              alt={project.title}
+              fill
+              className="object-cover"
+            />
+          </div>
         ) : (
           <div className="h-56 bg-[#E2E8F0] flex items-center justify-center text-sm text-black/50">
             {noDataText}
@@ -202,7 +203,8 @@ export default function BusinessPageClient({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {featuredProjects.length ? (
               featuredProjects.map((project, index) => {
-                const thumbnail = getThumbnail(project);
+                const thumbnail =
+                  project.thumbnail?.url || project.images?.[0]?.url;
                 const about = project.customFieldsMap?.about as
                   | { duration?: string; location?: string }
                   | undefined;
@@ -221,12 +223,14 @@ export default function BusinessPageClient({
                   >
                     <div className="relative overflow-hidden rounded-xl mb-4 shadow-lg">
                       {thumbnail ? (
-                        <div
-                          className="h-64 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                          style={{
-                            backgroundImage: `url('${thumbnail}')`,
-                          }}
-                        />
+                        <div className="relative h-64 overflow-hidden">
+                          <Image
+                            src={thumbnail}
+                            alt={project.title}
+                            fill
+                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                          />
+                        </div>
                       ) : (
                         <div className="h-64 bg-[#E2E8F0] flex items-center justify-center text-sm text-black/50">
                           {noDataText}
@@ -287,12 +291,14 @@ export default function BusinessPageClient({
                     className="group relative block w-full h-[320px] sm:h-[380px] lg:h-[420px] rounded-[40px] overflow-hidden text-left shadow-lg"
                   >
                     <div className="relative w-full h-full">
-                      <div
-                        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                        style={{
-                          backgroundImage: `url('${getThumbnail(sector)}')`,
-                        }}
-                      />
+                      {(sector.thumbnail?.url || sector.images?.[0]?.url) && (
+                        <Image
+                          src={sector.thumbnail?.url || sector.images?.[0]?.url}
+                          alt={sector.title}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                      )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10" />
                       <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 lg:p-10">
                         <div className="text-[#EC6707] text-xs sm:text-sm font-bold tracking-[0.2em] mb-2">

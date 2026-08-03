@@ -12,9 +12,9 @@ import {
   Download,
 } from "lucide-react";
 import { CmsContent } from "@/components/common/CmsContent";
+import Image from "@/components/common/Image";
 import { useCmsPostsBySlug } from "@/hooks/useCmsPostsBySlug";
 import { usePageBySlug } from "@/hooks/usePageBySlug";
-import { CmsPost } from "@/types/cmsPostType";
 
 function Reveal({
   children,
@@ -44,8 +44,6 @@ const impactCategorySlug = "bidnii-ololt";
 const reportsCategorySlug = "tailanguud";
 const principleIcons = [Leaf, Users, Globe, Lightbulb];
 
-const getPostImage = (post: CmsPost) => post.thumbnail?.url || post.images?.[0]?.url || "";
-
 export default function SustainabilityPage() {
   const t = useTranslations("sustainability");
   const commonT = useTranslations("common");
@@ -57,6 +55,7 @@ export default function SustainabilityPage() {
   const { posts: projects } = useCmsPostsBySlug(projectsCategorySlug);
   const { posts: impactPosts } = useCmsPostsBySlug(impactCategorySlug);
   const { posts: reports } = useCmsPostsBySlug(reportsCategorySlug);
+  const pageImage = page?.thumbnail?.url;
   const metrics = impactPosts[0]?.customFieldsMap?.keyMetrc as
     | Record<string, string>
     | undefined;
@@ -66,10 +65,13 @@ export default function SustainabilityPage() {
     <>
       {/* HERO */}
       <section className="relative w-full pt-24 pb-16 overflow-hidden bg-[#000000]">
-        {page?.thumbnail?.url && (
-          <div
-            className="absolute inset-0 bg-cover bg-center opacity-30"
-            style={{ backgroundImage: `url('${page.thumbnail.url}')` }}
+        {pageImage && (
+          <Image
+            src={pageImage}
+            alt=""
+            fill
+            priority
+            className="object-cover opacity-30"
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/70 via-[#000000]/40 to-[#000000]" />
@@ -149,10 +151,14 @@ export default function SustainabilityPage() {
               <Reveal key={project._id} delay={index * 0.15}>
                 <div className="group bg-[#F0F4F8] rounded-xl overflow-hidden border border-[#E2E8F0] hover:shadow-xl transition-all duration-500">
                   <div className="relative h-56 overflow-hidden">
-                    <div
-                      className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                      style={{ backgroundImage: `url('${getPostImage(project)}')` }}
-                    />
+                    {(project.thumbnail?.url || project.images?.[0]?.url) && (
+                      <Image
+                        src={project.thumbnail?.url || project.images?.[0]?.url}
+                        alt={project.title}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/60 to-transparent" />
                   </div>
                   <div className="p-5">

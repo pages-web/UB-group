@@ -4,10 +4,8 @@ import Link from "next/link";
 import { ArrowLeft, Calendar } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { CmsContent } from "@/components/common/CmsContent";
+import Image from "@/components/common/Image";
 import { usePostDetail } from "@/hooks/usePostDetail";
-import { CmsPost } from "@/types/cmsPostType";
-
-const getPostImage = (post: CmsPost) => post.thumbnail?.url || post.images?.[0]?.url || "";
 
 const formatDate = (date: string, locale: string) =>
   new Date(date).toLocaleDateString(locale === "mn" ? "mn-MN" : "en-US", {
@@ -44,15 +42,18 @@ export default function NewsDetailClient({
     );
   }
 
-  const image = getPostImage(post);
+  const image = post.thumbnail?.url || post.images?.[0]?.url;
 
   return (
     <>
       <section className="relative w-full pt-28 pb-16 sm:pb-20 overflow-hidden bg-[#000000]">
         {image && (
-          <div
-            className="absolute inset-0 bg-cover bg-center opacity-25"
-            style={{ backgroundImage: `url('${image}')` }}
+          <Image
+            src={image}
+            alt=""
+            fill
+            priority
+            className="object-cover opacity-25"
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/70 via-[#000000]/50 to-[#000000]" />
@@ -77,10 +78,14 @@ export default function NewsDetailClient({
       <section className="w-full py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-4xl px-6 lg:px-8">
           {image && (
-            <div
-              className="relative h-64 sm:h-80 lg:h-[420px] w-full rounded-xl bg-cover bg-center mb-10"
-              style={{ backgroundImage: `url('${image}')` }}
-            />
+            <div className="relative h-64 sm:h-80 lg:h-[420px] w-full rounded-xl overflow-hidden mb-10">
+              <Image
+                src={image}
+                alt={post.title}
+                fill
+                className="object-cover"
+              />
+            </div>
           )}
           <CmsContent
             html={post.content || noDataText}

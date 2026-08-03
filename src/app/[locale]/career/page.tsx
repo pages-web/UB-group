@@ -29,6 +29,7 @@ import {
   WIDGETS_SAVE_LEAD,
 } from "@/app/gql/mutations";
 import { CmsContent } from "@/components/common/CmsContent";
+import Image from "@/components/common/Image";
 import { useCmsPostsBySlug } from "@/hooks/useCmsPostsBySlug";
 import { usePageBySlug } from "@/hooks/usePageBySlug";
 
@@ -145,6 +146,7 @@ export default function CareerPage() {
   const allCompanies = commonT("all");
   const [activeCompany, setActiveCompany] = useState(allCompanies);
   const { page } = usePageBySlug("career");
+  const pageImage = page?.thumbnail?.url;
   const { posts: jobPosts } = useCmsPostsBySlug(jobsCategorySlug);
   const { posts: tenderPosts } = useCmsPostsBySlug(tendersCategorySlug);
 
@@ -501,10 +503,13 @@ export default function CareerPage() {
     <>
       {/* HERO */}
       <section className="relative w-full pt-24 pb-16 overflow-hidden bg-[#000000]">
-        {page?.thumbnail?.url && (
-          <div
-            className="absolute inset-0 bg-cover bg-center opacity-30"
-            style={{ backgroundImage: `url('${page.thumbnail.url}')` }}
+        {pageImage && (
+          <Image
+            src={pageImage}
+            alt=""
+            fill
+            priority
+            className="object-cover opacity-30"
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/70 via-[#000000]/40 to-[#000000]" />

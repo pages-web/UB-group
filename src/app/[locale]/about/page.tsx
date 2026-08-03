@@ -15,12 +15,11 @@ import {
   Quote,
 } from "lucide-react";
 import { CmsContent } from "@/components/common/CmsContent";
+import Image from "@/components/common/Image";
 import { useCmsCategories } from "@/hooks/useCmsCategories";
 import { useCmsPostByType } from "@/hooks/useCmsPostByType";
 import { useCmsPostsBySlug } from "@/hooks/useCmsPostsBySlug";
 import { usePageBySlug } from "@/hooks/usePageBySlug";
-import { CmsPost } from "@/types/cmsPostType";
-import { getCmsFileUrl } from "@/utils/utils";
 
 const historyCategorySlug = "kompaniin-tuukh";
 const visionCategorySlug = "alsyn-kharaa-erkhem-zorilgo-unet-zuils";
@@ -28,15 +27,11 @@ const achievementsCategorySlug = "bidnii-ololt-amjilt_2";
 const chairmanCategorySlug = "tuz-iin-darga";
 // TODO: Replace with the General Director message category slug.
 const generalDirectorCategorySlug = "erunkhii-zakhirlyn-mendchilgee";
-const clientPortalId = "3VGniCFkSThuWpzd9JfaH";
 const managementTeamPostType = "managment_team";
 const managementTeamCategorySlug = "udirdlagyn-bag";
 const constructionLeadershipPostType = "construction_industry_management_team";
 const constructionLeadershipCategorySlug =
   "buteen-baiguulaltyn-salbaryn-udirdlagyn-bag";
-
-const getPostImage = (post: CmsPost) =>
-  getCmsFileUrl(post.thumbnail?.url || post.images?.[0]?.url);
 
 /* ─── Reveal wrapper ─── */
 function Reveal({
@@ -107,7 +102,7 @@ function ChairmanSection() {
   const { posts } = useCmsPostsBySlug(chairmanCategorySlug);
   const post = posts[0];
   const role = post?.categories?.[0]?.name || noDataText;
-  const image = post ? getPostImage(post) : "";
+  const image = post?.thumbnail?.url || post?.images?.[0]?.url;
 
   return (
     <section className="w-full py-20 lg:py-28 bg-[#F0F4F8]">
@@ -116,12 +111,15 @@ function ChairmanSection() {
           <Reveal>
             <div className="relative">
               <div className="absolute -inset-4 lg:-inset-6 bg-white rounded-3xl shadow-lg" />
-              <div
-                className="relative h-[420px] lg:h-[520px] bg-cover bg-center rounded-2xl overflow-hidden shadow-xl"
-                style={
-                  image ? { backgroundImage: `url('${image}')` } : undefined
-                }
-              >
+              <div className="relative h-[420px] lg:h-[520px] rounded-2xl overflow-hidden shadow-xl">
+                {image && (
+                  <Image
+                    src={image}
+                    alt={post?.title || ""}
+                    fill
+                    className="object-cover"
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/50 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <p className="text-white/80 text-sm font-medium tracking-wider uppercase mb-1">
@@ -177,7 +175,7 @@ function GeneralDirectorSection() {
   const { posts } = useCmsPostsBySlug(generalDirectorCategorySlug);
   const post = posts[0];
   const role = post?.categories?.[0]?.name || noDataText;
-  const image = post ? getPostImage(post) : "";
+  const image = post?.thumbnail?.url || post?.images?.[0]?.url;
 
   return (
     <section className="w-full py-20 lg:py-28 bg-[#F0F4F8] border-t border-[#DDE5ED]">
@@ -210,12 +208,15 @@ function GeneralDirectorSection() {
           <Reveal className="order-1 lg:order-2">
             <div className="relative">
               <div className="absolute -inset-4 lg:-inset-6 bg-white rounded-3xl shadow-lg" />
-              <div
-                className="relative h-[420px] lg:h-[520px] bg-cover bg-center rounded-2xl overflow-hidden shadow-xl"
-                style={
-                  image ? { backgroundImage: `url('${image}')` } : undefined
-                }
-              >
+              <div className="relative h-[420px] lg:h-[520px] rounded-2xl overflow-hidden shadow-xl">
+                {image && (
+                  <Image
+                    src={image}
+                    alt={post?.title || ""}
+                    fill
+                    className="object-cover"
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/50 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6 text-right">
                   <p className="text-white/80 text-sm font-medium tracking-wider uppercase mb-1">
@@ -257,11 +258,20 @@ function HistoryTimeline({ locale }: { locale: string }) {
   const { posts } = useCmsPostsBySlug(historyCategorySlug);
   const items = [...posts]
     .sort((a, b) => Number(b.title) - Number(a.title))
-    .map((post) => ({
-      title: post.title,
-      content: post.content || noDataText,
-      images: post.images?.map((image) => image.url) || [],
-    }));
+    .map((post) => {
+      const images = [
+        post.thumbnail?.url,
+        ...(post.images?.map((image) => image.url) || []),
+      ]
+        .filter((url): url is string => Boolean(url))
+        .filter((url, index, allImages) => allImages.indexOf(url) === index);
+
+      return {
+        title: post.title,
+        content: post.content || noDataText,
+        images,
+      };
+    });
   const [activeIndex, setActiveIndex] = useState(0);
 
   if (!items.length) {
@@ -357,7 +367,7 @@ function HistoryTimeline({ locale }: { locale: string }) {
             className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-start"
           >
             {/* Image grid */}
-            <div className="grid grid-cols-3 gap-3 lg:gap-4">
+            <div className="grid grid-cols-3 auto-rows-min gap-3 lg:gap-4">
               {activeItem.images.length ? (
                 activeItem.images.map((src, index) => (
                   <motion.div
@@ -365,16 +375,20 @@ function HistoryTimeline({ locale }: { locale: string }) {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: index * 0.06 }}
-                    className={`relative overflow-hidden rounded-xl lg:rounded-2xl bg-[#E2E8F0] ${
+                    className={`relative aspect-[4/3] overflow-hidden rounded-xl lg:rounded-2xl bg-[#E2E8F0] ${
                       index === 0 ? "col-span-2 row-span-2" : ""
                     }`}
                   >
-                    <div
-                      className="w-full h-full bg-cover bg-center"
-                      style={{
-                        backgroundImage: `url('${src}')`,
-                        aspectRatio: index === 0 ? "4/3" : "4/3",
-                      }}
+                    <Image
+                      src={src}
+                      alt={`${activeItem.title} ${index + 1}`}
+                      fill
+                      sizes={
+                        index === 0
+                          ? "(min-width: 1024px) 42vw, 60vw"
+                          : "(min-width: 1024px) 20vw, 30vw"
+                      }
+                      className="object-cover"
                     />
                   </motion.div>
                 ))
@@ -419,7 +433,7 @@ function TeamSlider({
   const commonT = useTranslations("common");
   const noDataText = commonT("noData");
   const { posts } = useCmsPostByType(postTypeName);
-  const { categories } = useCmsCategories(clientPortalId, locale);
+  const { categories } = useCmsCategories(locale);
   const categoryNames = new Map(
     categories
       .filter((category) => category.parent?.slug === parentCategorySlug)
@@ -442,7 +456,7 @@ function TeamSlider({
         group.members.push({
           name: post.title,
           role: post.excerpt,
-          image: getPostImage(post),
+          image: post.thumbnail?.url || post.images?.[0]?.url,
         });
         groups[categoryId] = group;
       });
@@ -556,14 +570,14 @@ function DepartmentRow({
                 className="relative shrink-0 w-[260px] sm:w-[280px] snap-start bg-[#1A1A1A] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow"
               >
                 <div className="relative aspect-[3/4] overflow-hidden">
-                  <div
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={
-                      member.image
-                        ? { backgroundImage: `url('${member.image}')` }
-                        : undefined
-                    }
-                  />
+                  {member.image && (
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-cover"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/90 via-[#000000]/20 to-transparent" />
                 </div>
 
@@ -608,6 +622,8 @@ export default function AboutPage() {
   );
   const { page } = usePageBySlug("about");
   const { page: finalPage } = usePageBySlug("contact");
+  const pageImage = page?.thumbnail?.url;
+  const finalPageImage = finalPage?.thumbnail?.url;
 
   const visionIcons = [Eye, Target, Star];
   const visionCards = visionPosts
@@ -641,10 +657,13 @@ export default function AboutPage() {
     <div>
       {/* HERO */}
       <section className="relative w-full pt-24 pb-16 overflow-hidden bg-[#000000]">
-        {page?.thumbnail?.url && (
-          <div
-            className="absolute inset-0 bg-cover bg-center opacity-30"
-            style={{ backgroundImage: `url('${page.thumbnail.url}')` }}
+        {pageImage && (
+          <Image
+            src={pageImage}
+            alt=""
+            fill
+            priority
+            className="object-cover opacity-30"
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/70 via-[#000000]/40 to-[#000000]" />
@@ -778,10 +797,12 @@ export default function AboutPage() {
 
       {/* CTA + SLOGAN */}
       <section className="relative w-full py-16 lg:py-20 overflow-hidden bg-[#000000]">
-        {finalPage?.thumbnail?.url && (
-          <div
-            className="absolute inset-0 bg-cover bg-center opacity-10"
-            style={{ backgroundImage: `url('${finalPage.thumbnail.url}')` }}
+        {finalPageImage && (
+          <Image
+            src={finalPageImage}
+            alt=""
+            fill
+            className="object-cover opacity-10"
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/80 via-[#000000]/60 to-[#000000]/80" />
