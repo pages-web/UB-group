@@ -1,7 +1,7 @@
 "use client";
 
 import createDOMPurify from "dompurify";
-import React, { useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { cn } from "@/utils/utils";
 
 type CmsContentProps = {
@@ -15,13 +15,13 @@ export const CmsContent = ({
   className,
   ...props
 }: CmsContentProps) => {
-  const sanitizedHtml = useMemo(() => {
-    if (typeof window === "undefined") return "";
+  const [sanitizedHtml, setSanitizedHtml] = useState("");
 
+  useEffect(() => {
     const purifier = createDOMPurify(window);
-    return purifier.sanitize(html || "", {
+    setSanitizedHtml(purifier.sanitize(html || "", {
       ADD_ATTR: ["data-level"],
-    });
+    }));
   }, [html]);
 
   return (

@@ -1,16 +1,10 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import ApolloClientProvider from "@/lib/apollo/provider";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import "../globals.css";
-
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin", "cyrillic"],
-});
 
 export async function generateMetadata({
   params,
@@ -24,9 +18,9 @@ export async function generateMetadata({
     title: t("title"),
     description: t("description"),
     icons: {
-      icon: "/ub-logo.png",
-      shortcut: "/ub-logo.png",
-      apple: "/ub-logo.png",
+      icon: "/ub-favicon.png",
+      shortcut: "/ub-favicon.png",
+      apple: "/ub-favicon.png",
     },
   };
 }
@@ -47,21 +41,14 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html
-      lang={locale}
-      className={`${manrope.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col bg-[#F0F4F8] text-[#000000] font-sans">
-        <NextIntlClientProvider key={locale} locale={locale} messages={messages}>
-          <ApolloClientProvider>
-            <Header />
-            <main className="flex-1">
-              {children}
-            </main>
-            <Footer />
-          </ApolloClientProvider>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider key={locale} locale={locale} messages={messages}>
+      <ApolloClientProvider>
+        <Header />
+        <main className="flex-1">
+          {children}
+        </main>
+        <Footer />
+      </ApolloClientProvider>
+    </NextIntlClientProvider>
   );
 }
