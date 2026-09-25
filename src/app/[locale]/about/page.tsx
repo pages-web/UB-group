@@ -720,9 +720,10 @@ export default function AboutPage() {
                       <h3 className="text-xl font-bold text-[#000000] mb-6">
                         {card.title}
                       </h3>
-                      <p className="text-[15px] text-[#334155] leading-relaxed flex-grow">
-                        {card.text}
-                      </p>
+                      <CmsContent
+                        html={card.text}
+                        className="text-[15px] text-[#334155] leading-relaxed flex-grow [&_p]:text-[15px] [&_p]:leading-relaxed"
+                      />
                     </div>
                   </Reveal>
                 );
