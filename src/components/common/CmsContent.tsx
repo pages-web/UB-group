@@ -18,10 +18,16 @@ export const CmsContent = ({
   const [sanitizedHtml, setSanitizedHtml] = useState("");
 
   useEffect(() => {
-    const purifier = createDOMPurify(window);
-    setSanitizedHtml(purifier.sanitize(html || "", {
-      ADD_ATTR: ["data-level"],
-    }));
+    const timeoutId = window.setTimeout(() => {
+      const purifier = createDOMPurify(window);
+      setSanitizedHtml(
+        purifier.sanitize(html || "", {
+          ADD_ATTR: ["data-level"],
+        }),
+      );
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
   }, [html]);
 
   return (
